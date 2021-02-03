@@ -1,15 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using TradingCardGame.Services;
+using TradingCardGame.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using TradingCardGame.Models.Channel;
 
 namespace TradingCardGame.Controllers
 {
-    [Authorize]
     [AutoValidateAntiforgeryToken]
     public class ChannelController : Controller
     {
-        public IActionResult Index()
+        private readonly IChannelService channelService;
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public ChannelController(IChannelService channelService, UserManager<ApplicationUser> userManager)
         {
-            return View();
+            this.channelService = channelService;
+            this.userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var user = await this.userManager.GetUserAsync(User);
+            if(user == null)
+            {
+                return Redirect("/Account/Login");
+            }
+
+            var channel = new ChannelIndexViewModel()
+            {
+                Channels = this.channelService.GetUserChannels(user.Id),
+                SelectedChannel = this.channelService.GetChannelByName("Global Channel")
+            };
+
+            return View(channel);
         }
     }
 }
