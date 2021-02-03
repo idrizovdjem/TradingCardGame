@@ -1,17 +1,15 @@
+using TradingCardGame.Data;
+using TradingCardGame.Data.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TradingCardGame.Data;
+using TradingCardGame.Data.Seeders;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace TradingCardGame
 {
@@ -29,17 +27,39 @@ namespace TradingCardGame
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("TCGConnectionString")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews();
+            services.Configure<CookiePolicyOptions>(
+                options =>
+                {
+                    options.CheckConsentNeeded = context => true;
+                    options.MinimumSameSitePolicy = SameSiteMode.None;
+                });
+
+            services.AddControllersWithViews(
+                options =>
+                {
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                }).AddRazorRuntimeCompilation();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.Migrate();
+                new RoleSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

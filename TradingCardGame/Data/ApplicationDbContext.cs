@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using TradingCardGame.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TradingCardGame.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+
+        public DbSet<Card> Cards { get; set; }
+
+        public DbSet<UserCards> UserCards { get; set; }
     }
 }
