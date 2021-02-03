@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TradingCardGame.Data.Seeders
 {
-    public class RoleSeeder
+    public class RoleSeeder : ISeeder
     {
         private readonly List<string> roles = new List<string>()
         {

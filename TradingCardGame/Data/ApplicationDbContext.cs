@@ -14,5 +14,9 @@ namespace TradingCardGame.Data
         public DbSet<Card> Cards { get; set; }
 
         public DbSet<UserCards> UserCards { get; set; }
+
+        public DbSet<Channel> Channels { get; set; }
+
+        public DbSet<UserChannels> UserChannels { get; set; }
     }
 }

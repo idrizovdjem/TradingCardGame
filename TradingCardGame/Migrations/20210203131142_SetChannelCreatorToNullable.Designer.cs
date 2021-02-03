@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TradingCardGame.Data;
 
-namespace TradingCardGame.Data.Migrations
+namespace TradingCardGame.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210203131142_SetChannelCreatorToNullable")]
+    partial class SetChannelCreatorToNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,6 +253,29 @@ namespace TradingCardGame.Data.Migrations
                     b.ToTable("Cards");
                 });
 
+            modelBuilder.Entity("TradingCardGame.Data.Models.Channel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Channels");
+                });
+
             modelBuilder.Entity("TradingCardGame.Data.Models.UserCards", b =>
                 {
                     b.Property<int>("Id")
@@ -271,6 +296,31 @@ namespace TradingCardGame.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserCards");
+                });
+
+            modelBuilder.Entity("TradingCardGame.Data.Models.UserChannels", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("ChannelId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChannelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserChannels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -324,6 +374,15 @@ namespace TradingCardGame.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TradingCardGame.Data.Models.Channel", b =>
+                {
+                    b.HasOne("TradingCardGame.Data.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("TradingCardGame.Data.Models.UserCards", b =>
                 {
                     b.HasOne("TradingCardGame.Data.Models.Card", "Card")
@@ -339,9 +398,31 @@ namespace TradingCardGame.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("TradingCardGame.Data.Models.UserChannels", b =>
+                {
+                    b.HasOne("TradingCardGame.Data.Models.Channel", "Channel")
+                        .WithMany("Users")
+                        .HasForeignKey("ChannelId");
+
+                    b.HasOne("TradingCardGame.Data.Models.ApplicationUser", "User")
+                        .WithMany("Channels")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Channel");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TradingCardGame.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Cards");
+
+                    b.Navigation("Channels");
+                });
+
+            modelBuilder.Entity("TradingCardGame.Data.Models.Channel", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }
