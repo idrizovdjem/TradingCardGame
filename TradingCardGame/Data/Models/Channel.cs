@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TradingCardGame.Data.Models
 {
@@ -11,6 +10,7 @@ namespace TradingCardGame.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.Users = new List<UserChannels>();
+            this.Posts = new List<Post>();
         }
 
         public string Id { get; set; }
@@ -26,5 +26,7 @@ namespace TradingCardGame.Data.Models
         public bool IsDeleted { get; set; }
 
         public ICollection<UserChannels> Users { get; set; }
+
+        public ICollection<Post> Posts { get; set; }
     }
 }

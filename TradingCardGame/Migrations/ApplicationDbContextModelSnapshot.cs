@@ -17,7 +17,7 @@ namespace TradingCardGame.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -274,6 +274,76 @@ namespace TradingCardGame.Migrations
                     b.ToTable("Channels");
                 });
 
+            modelBuilder.Entity("TradingCardGame.Data.Models.Comment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("TradingCardGame.Data.Models.Post", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ChannelId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChannelId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("TradingCardGame.Data.Models.UserCards", b =>
                 {
                     b.Property<int>("Id")
@@ -381,6 +451,44 @@ namespace TradingCardGame.Migrations
                     b.Navigation("Creator");
                 });
 
+            modelBuilder.Entity("TradingCardGame.Data.Models.Comment", b =>
+                {
+                    b.HasOne("TradingCardGame.Data.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TradingCardGame.Data.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("TradingCardGame.Data.Models.Post", b =>
+                {
+                    b.HasOne("TradingCardGame.Data.Models.Channel", "Channel")
+                        .WithMany("Posts")
+                        .HasForeignKey("ChannelId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TradingCardGame.Data.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Channel");
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("TradingCardGame.Data.Models.UserCards", b =>
                 {
                     b.HasOne("TradingCardGame.Data.Models.Card", "Card")
@@ -420,7 +528,14 @@ namespace TradingCardGame.Migrations
 
             modelBuilder.Entity("TradingCardGame.Data.Models.Channel", b =>
                 {
+                    b.Navigation("Posts");
+
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("TradingCardGame.Data.Models.Post", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TradingCardGame.Migrations
 {
-    public partial class SetChannelCreatorToNullable : Migration
+    public partial class AddPostAndCommentsToChannel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -216,6 +216,34 @@ namespace TradingCardGame.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ChannelId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Score = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Posts_Channels_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channels",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserChannels",
                 columns: table => new
                 {
@@ -240,6 +268,34 @@ namespace TradingCardGame.Migrations
                         principalTable: "Channels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Score = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -287,6 +343,26 @@ namespace TradingCardGame.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_CreatorId",
+                table: "Comments",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_PostId",
+                table: "Comments",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_ChannelId",
+                table: "Posts",
+                column: "ChannelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_CreatorId",
+                table: "Posts",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserCards_CardId",
                 table: "UserCards",
                 column: "CardId");
@@ -325,6 +401,9 @@ namespace TradingCardGame.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "UserCards");
 
             migrationBuilder.DropTable(
@@ -332,6 +411,9 @@ namespace TradingCardGame.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "Cards");
