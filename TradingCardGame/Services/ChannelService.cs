@@ -2,20 +2,22 @@
 using TradingCardGame.Data;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using TradingCardGame.Data.Models;
-using TradingCardGame.Models.Channel;
 using TradingCardGame.Data.Enums;
+using TradingCardGame.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using TradingCardGame.Models.Channel;
 
 namespace TradingCardGame.Services
 {
     public class ChannelService : IChannelService
     {
         private readonly ApplicationDbContext context;
+        private readonly IPostService postService;
 
-        public ChannelService(ApplicationDbContext context)
+        public ChannelService(ApplicationDbContext context, IPostService postService)
         {
             this.context = context;
+            this.postService = postService;
         }
 
         public async Task AddUserToChannel(string userId, string channelName, ChannelUserRole role)
@@ -64,6 +66,22 @@ namespace TradingCardGame.Services
                 // add channel content
             };
             
+            return channel;
+        }
+
+        public ChannelViewModel GetChannelContent(string channelName)
+        {
+            var channelId = this.context.Channels
+                .Where(c => c.Name == channelName)
+                .Select(c => c.Id)
+                .FirstOrDefault();
+
+            var channel = new ChannelViewModel()
+            {
+                Name = channelName,
+                Posts = this.postService.GetChannelPosts(channelId)
+            };
+
             return channel;
         }
 

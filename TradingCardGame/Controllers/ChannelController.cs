@@ -29,5 +29,11 @@ namespace TradingCardGame.Controllers
             var channel = this.channelService.GetUserChannels(user.Id);
             return View(channel);
         }
+
+        public IActionResult GetChannelContent(string channelName)
+        {
+            var channelContent = this.channelService.GetChannelContent(channelName);
+            return Json(channelContent);
+        }
     }
 }
