@@ -1,6 +1,29 @@
-﻿@{ 
+﻿@{
     Layout = "_Layout";
     ViewData["Title"] = "Channels";
 }
 
-@model TradingCardGame.Models.Channel.ChannelIndexViewModel
+@model List<string>
+
+<link rel="stylesheet" href="~/css/channels.css" />
+
+<div class="channel-container">
+    <div class="channels-sidebar">
+        <h3 class="channels-text">Channels</h3>
+        <div class="user-channels">
+            @foreach (var channel in Model)
+            {
+                <div class="single-channel">
+                    <span>@channel</span>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="channel-content">
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/channels.js"></script>
+} 

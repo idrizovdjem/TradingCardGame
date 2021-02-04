@@ -1,0 +1,12 @@
+﻿.navigation {
+    width: 100%;
+    height: 50px;
+    background-color: #4E4187;
+}
+
+.logo {
+    font-size: 30px;
+    float: left;
+    margin-left: 3%;
+    color: white;
+}

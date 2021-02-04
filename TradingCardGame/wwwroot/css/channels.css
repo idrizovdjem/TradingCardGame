@@ -1,0 +1,47 @@
+﻿.channel-container {
+    width: 100%;
+    height: 100vh;
+}
+
+.channels-sidebar {
+    width: 25%;
+    height: 100vh;
+    text-align: center;
+    float: left;
+    outline: 1px solid black;
+    overflow-y: auto;
+}
+
+.channels-text {
+    margin: 10px 0;
+}
+
+.single-channel {
+    width: 100%;
+    text-align: left;
+    padding-left: 5%;
+    font-size: 30px;
+    height: 50px;
+}
+
+    .single-channel:hover {
+        background-color: #4E4187;
+        color: white;
+        cursor: pointer;
+    }
+
+.channel-content {
+    width: 75%;
+    float: left;
+    height: 100vh;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.content {
+    width: 80%;
+    margin: 10px auto;
+    padding: 5px 10px;
+    text-align: justify;
+    outline: 1px solid black;
+}

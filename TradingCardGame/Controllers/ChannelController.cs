@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using TradingCardGame.Services;
 using TradingCardGame.Data.Models;
 using Microsoft.AspNetCore.Identity;
-using TradingCardGame.Models.Channel;
 
 namespace TradingCardGame.Controllers
 {
@@ -27,12 +26,7 @@ namespace TradingCardGame.Controllers
                 return Redirect("/Account/Login");
             }
 
-            var channel = new ChannelIndexViewModel()
-            {
-                Channels = this.channelService.GetUserChannels(user.Id),
-                SelectedChannel = this.channelService.GetChannelByName("Global Channel")
-            };
-
+            var channel = this.channelService.GetUserChannels(user.Id);
             return View(channel);
         }
     }
