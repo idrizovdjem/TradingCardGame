@@ -71,10 +71,11 @@ namespace TradingCardGame.Services
 
         public ChannelViewModel GetChannelContent(string channelName)
         {
-            var channelId = this.context.Channels
-                .Where(c => c.Name == channelName)
-                .Select(c => c.Id)
-                .FirstOrDefault();
+            var channelId = this.GetChannelIdByName(channelName);
+            if(channelId == null)
+            {
+                return null;
+            }
 
             var channel = new ChannelViewModel()
             {
@@ -83,6 +84,14 @@ namespace TradingCardGame.Services
             };
 
             return channel;
+        }
+
+        public string GetChannelIdByName(string channelName)
+        {
+            return this.context.Channels
+                .Where(c => c.Name == channelName)
+                .Select(c => c.Id)
+                .FirstOrDefault();
         }
 
         public List<string> GetUserChannels(string userId)

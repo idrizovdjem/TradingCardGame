@@ -1,6 +1,6 @@
 ﻿.channel-container {
     width: 100%;
-    height: 100vh;
+    height: 93vh;
 }
 
 .channels-sidebar {
@@ -24,24 +24,60 @@
     height: 50px;
 }
 
-    .single-channel:hover {
-        background-color: #4E4187;
-        color: white;
-        cursor: pointer;
-    }
+.single-channel:hover {
+    background-color: #4E4187;
+    color: white;
+    cursor: pointer;
+}
 
 .channel-content {
     width: 75%;
     float: left;
-    height: 100vh;
+    height: 92vh;
     overflow-y: auto;
     text-align: center;
 }
 
-.content {
+.post {
     width: 80%;
     margin: 10px auto;
     padding: 5px 10px;
     text-align: justify;
     outline: 1px solid black;
 }
+
+.no-posts {
+    font-size: 20px;
+}
+
+.post-form {
+    width: 50%;
+    margin: auto;
+}
+
+#postContentArea {
+    display: none;
+}
+
+.post-creator {
+    font-size: 20px;
+}
+
+.like-icon {
+    margin: 0 5px;
+}
+
+.like-icon:hover {
+    cursor: pointer;
+    color: green;
+}
+
+.dislike-icon:hover {
+    cursor: pointer;
+    color: red;
+}
+
+.post-score {
+    user-select: none;
+}
+

@@ -21,6 +21,26 @@
     </div>
 
     <div class="channel-content">
+        <h1 class="header mt-3"></h1>
+        <div class="post-form">
+            <form class="mt-5 mb-5 text-left" method="post">
+                <div class="alert alert-danger" role="alert" id="errorAlert">
+                    Content should be at least 3 symbols long
+                </div>
+                <h3>Write a post</h3>
+                <div class="form-group">
+                    <input class="form-control" id="dummyInput" placeholder="Tell us what you think" onclick="showTextArea(event)" />
+                </div>
+                <div id="postContentArea">
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Post content..." rows="5"></textarea>
+                    </div>
+                    <button class="btn btn-primary w-100" onclick="createPost(event)">Post</button>
+                </div>
+            </form>
+        </div>
+        <div class="channel-posts">
+        </div>
     </div>
 </div>
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TradingCardGame.Models.Posts
+﻿namespace TradingCardGame.Models.Posts
 {
     public class PostViewModel
     {
@@ -10,7 +8,7 @@ namespace TradingCardGame.Models.Posts
 
         public string Content { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; }
 
         public int Score { get; set; }
     }
