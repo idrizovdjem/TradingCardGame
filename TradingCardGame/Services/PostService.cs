@@ -48,7 +48,7 @@ namespace TradingCardGame.Services
                     CreatedOn = post.CreatedOn.ToString("d"),
                     Creator = post.Creator.Email,
                     Score = this.context.PostVotes
-                        .Count(pv => pv.PostId == post.Id && pv.UserId == userId && pv.IsDeleted == false),
+                        .Count(pv => pv.PostId == post.Id && pv.IsDeleted == false),
                     IsVoted = this.context.PostVotes
                         .Any(pv => pv.PostId == post.Id && pv.UserId == userId && pv.IsDeleted == false)
                 })
@@ -66,7 +66,7 @@ namespace TradingCardGame.Services
                     CreatedOn = post.CreatedOn.ToString("d"),
                     Creator = post.Creator.Email,
                     Score = this.context.PostVotes
-                        .Count(pv => pv.PostId == post.Id && pv.UserId == userId && pv.IsDeleted == false),
+                        .Count(pv => pv.PostId == post.Id && pv.IsDeleted == false),
                     IsVoted = this.context.PostVotes
                         .Any(pv => pv.PostId == post.Id && pv.UserId == userId && pv.IsDeleted == false)
                 })
