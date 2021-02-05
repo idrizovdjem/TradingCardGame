@@ -10,8 +10,8 @@ using TradingCardGame.Data;
 namespace TradingCardGame.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210204133843_AddPostAndCommentsToChannel")]
-    partial class AddPostAndCommentsToChannel
+    [Migration("20210205101050_RemoveVotePropertyOfPostVotes")]
+    partial class RemoveVotePropertyOfPostVotes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -299,9 +299,6 @@ namespace TradingCardGame.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Score")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
@@ -334,9 +331,6 @@ namespace TradingCardGame.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Score")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ChannelId");
@@ -344,6 +338,33 @@ namespace TradingCardGame.Migrations
                     b.HasIndex("CreatorId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("TradingCardGame.Data.Models.PostVote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PostVotes");
                 });
 
             modelBuilder.Entity("TradingCardGame.Data.Models.UserCards", b =>
@@ -491,6 +512,25 @@ namespace TradingCardGame.Migrations
                     b.Navigation("Creator");
                 });
 
+            modelBuilder.Entity("TradingCardGame.Data.Models.PostVote", b =>
+                {
+                    b.HasOne("TradingCardGame.Data.Models.Post", "Post")
+                        .WithMany("Votes")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TradingCardGame.Data.Models.ApplicationUser", "User")
+                        .WithMany("PostVotes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TradingCardGame.Data.Models.UserCards", b =>
                 {
                     b.HasOne("TradingCardGame.Data.Models.Card", "Card")
@@ -526,6 +566,8 @@ namespace TradingCardGame.Migrations
                     b.Navigation("Cards");
 
                     b.Navigation("Channels");
+
+                    b.Navigation("PostVotes");
                 });
 
             modelBuilder.Entity("TradingCardGame.Data.Models.Channel", b =>
@@ -538,6 +580,8 @@ namespace TradingCardGame.Migrations
             modelBuilder.Entity("TradingCardGame.Data.Models.Post", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }

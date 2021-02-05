@@ -11,10 +11,13 @@ namespace TradingCardGame.Data.Models
             this.Id = Guid.NewGuid().ToString();
             this.Cards = new List<UserCards>();
             this.Channels = new List<UserChannels>();
+            this.PostVotes = new List<PostVote>();
         }
 
         public ICollection<UserCards> Cards { get; set; }
 
         public ICollection<UserChannels> Channels { get; set; }
+
+        public ICollection<PostVote> PostVotes { get; set; }
     }
 }

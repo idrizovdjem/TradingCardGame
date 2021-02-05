@@ -69,7 +69,7 @@ namespace TradingCardGame.Services
             return channel;
         }
 
-        public ChannelViewModel GetChannelContent(string channelName)
+        public ChannelViewModel GetChannelContent(string channelName, string userId)
         {
             var channelId = this.GetChannelIdByName(channelName);
             if(channelId == null)
@@ -80,7 +80,7 @@ namespace TradingCardGame.Services
             var channel = new ChannelViewModel()
             {
                 Name = channelName,
-                Posts = this.postService.GetChannelPosts(channelId)
+                Posts = this.postService.GetChannelPosts(channelId, userId)
             };
 
             return channel;

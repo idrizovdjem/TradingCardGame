@@ -10,6 +10,7 @@ namespace TradingCardGame.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.Comments = new List<Comment>();
+            this.Votes = new List<PostVote>();
         }
 
         public string Id { get; set; }
@@ -30,10 +31,10 @@ namespace TradingCardGame.Data.Models
 
         public DateTime CreatedOn { get; set; }
 
-        public int Score { get; set; }
-
         public bool IsDeleted { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<PostVote> Votes { get; set; }
     }
 }

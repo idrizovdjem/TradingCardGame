@@ -17,7 +17,7 @@ namespace TradingCardGame.Services
 
         Task AddUserToChannel(string userId, string channelName, ChannelUserRole role);
 
-        ChannelViewModel GetChannelContent(string channelName);
+        ChannelViewModel GetChannelContent(string channelName, string userId);
 
         string GetChannelIdByName(string channelName);
     }

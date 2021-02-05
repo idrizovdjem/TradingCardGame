@@ -6,10 +6,12 @@ namespace TradingCardGame.Services
 {
     public interface IPostService
     {
-        ICollection<PostViewModel> GetChannelPosts(string channelId);
+        ICollection<PostViewModel> GetChannelPosts(string channelId, string userId);
 
         Task<PostViewModel> CreateAsync(string channelId, string userId, string content);
 
-        PostViewModel GetPostById(string postId);
+        PostViewModel GetPostById(string postId, string userId);
+
+        Task Vote(string postId, string userId);
     }
 }

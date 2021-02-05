@@ -23,6 +23,8 @@ namespace TradingCardGame.Data
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<PostVote> PostVotes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Comment>(entity =>
@@ -38,6 +40,19 @@ namespace TradingCardGame.Data
                 entity
                     .HasOne(p => p.Channel)
                     .WithMany(c => c.Posts)
+                    .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            builder.Entity<PostVote>(entity =>
+            {
+                entity
+                    .HasOne(pv => pv.Post)
+                    .WithMany(p => p.Votes)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity
+                    .HasOne(pv => pv.User)
+                    .WithMany(u => u.PostVotes)
                     .OnDelete(DeleteBehavior.NoAction);
             });
 

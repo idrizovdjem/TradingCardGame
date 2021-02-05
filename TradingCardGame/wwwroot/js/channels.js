@@ -64,18 +64,22 @@ function renderChannelContent(name, posts) {
         const postScoreElement = document.createElement('div');
         postScoreElement.classList.add('post-score');
 
+        const scoreSpanElement = document.createElement('span');
+
         const scoreElement = document.createElement('span');
         scoreElement.textContent = `Score: ${post.score}`;
 
-        const likeElement = document.createElement('i');
-        likeElement.classList.add('far', 'fa-thumbs-up', 'fa-lg', 'fa-fw', 'like-icon');
+        const likeElement = document.createElement('img');
+        let picture = post.isVoted ? 'redHeart.png' : 'heart.png';
+        likeElement.setAttribute('src', `../icons/${picture}`);
+        likeElement.classList.add('heart-button');
+        likeElement.addEventListener('click', () => {
+            likePost(post, scoreElement, likeElement)
+        });
 
-        const dislikeElement = document.createElement('i');
-        dislikeElement.classList.add('far', 'fa-thumbs-down', 'fa-lg', 'fa-fw', 'dislike-icon');
-
-        scoreElement.appendChild(likeElement);
-        scoreElement.appendChild(dislikeElement);
-        postScoreElement.appendChild(scoreElement);
+        scoreSpanElement.appendChild(scoreElement);
+        scoreSpanElement.appendChild(likeElement);
+        postScoreElement.appendChild(scoreSpanElement);
 
         const postElement = document.createElement('div');
         postElement.classList.add('post');
@@ -142,7 +146,51 @@ async function createPost(event) {
     }
 
     const channelPosts = document.querySelector('div.channel-posts');
-    channelPosts.innerHTML = `<div class="post">${data.content}</div>` + channelPosts.innerHTML;
+
+    const idInput = document.createElement('input');
+    idInput.setAttribute('type', "hidden");
+    idInput.value = data.id;
+
+    const creatorElement = document.createElement('span');
+    creatorElement.classList.add('post-creator');
+    creatorElement.textContent = `Creator: ${data.creator}`;
+
+    const contentElement = document.createElement('p');
+    contentElement.textContent = data.content;
+
+    const dateElement = document.createElement('span');
+    dateElement.classList.add('post-date');
+    dateElement.textContent = `Created on: ${data.createdOn}`;
+
+    const postScoreElement = document.createElement('div');
+    postScoreElement.classList.add('post-score');
+
+    const scoreSpanElement = document.createElement('span');
+
+    const scoreElement = document.createElement('span');
+    scoreElement.textContent = `Score: ${data.score}`;
+
+    const likeElement = document.createElement('img');
+    let picture = data.isVoted ? 'redHeart.png' : 'heart.png';
+    likeElement.setAttribute('src', `../icons/${picture}`);
+    likeElement.classList.add('heart-button');
+    likeElement.addEventListener('click', () => {
+        likePost(data, scoreElement, likeElement)
+    });
+
+    scoreSpanElement.appendChild(scoreElement);
+    scoreSpanElement.appendChild(likeElement);
+    postScoreElement.appendChild(scoreSpanElement);
+
+    const postElement = document.createElement('div');
+    postElement.classList.add('post');
+    postElement.appendChild(idInput);
+    postElement.appendChild(creatorElement);
+    postElement.appendChild(contentElement);
+    postElement.appendChild(dateElement);
+    postElement.appendChild(postScoreElement);
+
+    channelPosts.insertBefore(postElement, channelPosts.firstChild);
 
     const dummyInput = document.getElementById('dummyInput');
     dummyInput.style.display = 'block';
@@ -150,12 +198,21 @@ async function createPost(event) {
     textArea.value = '';
 }
 
-function likePost(event) {
+function likePost(post, scoreElement, likeElement) {
+    let votes;
+    let picture = likeElement.getAttribute('src').includes('heart');
+    if (picture) {
+        votes = Number(scoreElement.textContent.substr(6)) + 1;
+        picture = 'redHeart.png';
+    } else {
+        votes = Number(scoreElement.textContent.substr(6)) - 1;
+        picture = 'heart.png';
+    }
 
-}
+    fetch(`/Post/Vote?postId=${post.id}`);
 
-function dislikePost(event) {
-
+    likeElement.setAttribute('src', `../icons/${picture}`);
+    scoreElement.textContent = `Score: ${votes}`;
 }
 
 window.onload = function () {

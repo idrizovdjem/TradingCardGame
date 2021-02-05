@@ -35,5 +35,12 @@ namespace TradingCardGame.Controllers
 
             return Json(post);
         }
+
+        public async Task<IActionResult> Vote(string postId)
+        {
+            var userId = this.userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            await this.postService.Vote(postId, userId);
+            return Ok();
+        }
     }
 }
