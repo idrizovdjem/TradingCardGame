@@ -62,6 +62,7 @@ namespace TradingCardGame.Services
                 .Include(post => post.Creator)
                 .Select(post => new PostViewModel()
                 {
+                    Id = postId,
                     Content = post.Content,
                     CreatedOn = post.CreatedOn.ToString("d"),
                     Creator = post.Creator.Email,
