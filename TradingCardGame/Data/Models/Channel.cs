@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TradingCardGame.Data.Enums;
 
 namespace TradingCardGame.Data.Models
 {
@@ -22,6 +23,10 @@ namespace TradingCardGame.Data.Models
         public string CreatorId { get; set; }
 
         public ApplicationUser Creator { get; set; }
+
+        public ChannelType Security{ get; set; }
+
+        public int MaxUsers { get; set; }
 
         public bool IsDeleted { get; set; }
 

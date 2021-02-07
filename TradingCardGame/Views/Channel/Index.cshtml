@@ -1,9 +1,10 @@
 ﻿@{
     Layout = "_Layout";
     ViewData["Title"] = "Channels";
+    var createButtonStyle = Model.IsChannelCreated ? "disabled" : string.Empty;
 }
 
-@model List<string>
+@model TradingCardGame.Models.Channel.ChannelIndexViewModel
 
 <link rel="stylesheet" href="~/css/channels.css" />
 
@@ -11,7 +12,12 @@
     <div class="channels-sidebar">
         <h3 class="channels-text">Channels</h3>
         <div class="user-channels">
-            @foreach (var channel in Model)
+            
+            <div class="channel-create-button">
+                <a class="btn btn-primary w-100 @createButtonStyle" asp-controller="Channel" asp-action="CreateChannel">Create Channel</a>
+            </div>
+
+            @foreach (var channel in Model.Channels)
             {
                 <div class="single-channel">
                     <span>@channel</span>

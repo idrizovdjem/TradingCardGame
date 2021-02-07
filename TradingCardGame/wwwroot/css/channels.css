@@ -74,3 +74,27 @@
 .heart-button:hover {
     cursor: pointer;
 }
+
+.channel-create-button {
+    width: 80%;
+    margin: 10px auto;
+}
+
+.channel-create-button a {
+    color: white !important;
+    cursor: pointer;
+}
+
+.bottom-button {
+    position: absolute;
+    bottom: 5px;
+    width: 20%;
+    color: white !important;
+    cursor: pointer;
+    margin-left: 2.5%;
+}
+
+.user-channels {
+    overflow-y: auto;
+    height: 85vh;
+}

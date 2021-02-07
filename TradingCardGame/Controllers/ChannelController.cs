@@ -1,8 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TradingCardGame.Services;
+using TradingCardGame.Data.Enums;
 using TradingCardGame.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using TradingCardGame.Models.Channel;
 
 namespace TradingCardGame.Controllers
 {
@@ -21,12 +23,16 @@ namespace TradingCardGame.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(User);
-            if(user == null)
+            if (user == null)
             {
                 return Redirect("/Account/Login");
             }
 
-            var channel = this.channelService.GetUserChannels(user.Id);
+            var channel = new ChannelIndexViewModel()
+            {
+                Channels = this.channelService.GetUserChannels(user.Id),
+                IsChannelCreated = this.channelService.HaveUserCreatedChannel(user.Id)
+            };
             return View(channel);
         }
 
@@ -35,6 +41,46 @@ namespace TradingCardGame.Controllers
             var userId = this.userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var channelContent = this.channelService.GetChannelContent(channelName, userId);
             return Json(channelContent);
+        }
+
+        public async Task<IActionResult> CreateChannel()
+        {
+            var user = await this.userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("/Account/Login");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateChannel(CreateChannelInputModel input)
+        {
+            var user = await this.userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("/Account/Login");
+            }
+
+            if(!ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            var channel = new Channel()
+            {
+                CreatorId = user.Id,
+                Name = input.Name,
+                IsDeleted = false,
+                MaxUsers = input.MaxPlayers,
+                Security = input.Security
+            };
+
+            await this.channelService.CreateAsync(channel);
+            await this.channelService.AddUserToChannel(user.Id, channel.Name, ChannelUserRole.Administrator);
+
+            return RedirectToAction("Index");
         }
     }
 }

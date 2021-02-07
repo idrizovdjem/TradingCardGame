@@ -1,0 +1,27 @@
+﻿@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Create Channel";
+}
+
+@model TradingCardGame.Models.Channel.CreateChannelInputModel
+
+<link rel="stylesheet" href="~/css/createChannel.css" />
+
+<div class="create-container">
+    <form asp-controller="Channel" asp-action="CreateChannel" method="post">
+        <h3>Create channel</h3>
+        <div class="form-group">
+            <input class="form-control mt-3" asp-for="Name" placeholder="Channel name..." />
+        </div>
+        <div class="form-group">
+            <input class="form-control mb-3" asp-for="MaxPlayers" placeholder="Max Players" />
+            <select asp-for="Security" class="custom-select">
+
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+            </select>
+        </div>
+
+        <button class="btn btn-primary w-100">Create Channel</button>
+    </form>
+</div>

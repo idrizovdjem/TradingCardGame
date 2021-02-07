@@ -36,6 +36,7 @@ function renderChannelContent(name, posts) {
     headerElement.textContent = name;
 
     const channelPostsElement = document.querySelector('div.channel-posts');
+    channelPostsElement.innerHTML = '';
 
     if (posts.length === 0) {
         const noPostsElement = document.createElement('p');
@@ -217,5 +218,5 @@ function likePost(post, scoreElement, likeElement) {
 
 window.onload = function () {
     const userChannels = document.querySelector('div.user-channels');
-    userChannels.children[0].click();
+    userChannels.children[1].click();
 }

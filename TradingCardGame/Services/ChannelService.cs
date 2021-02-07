@@ -40,15 +40,8 @@ namespace TradingCardGame.Services
             await this.context.SaveChangesAsync();
         }
 
-        public async Task CreateAsync(string channelName, string userId)
+        public async Task CreateAsync(Channel channel)
         {
-            var channel = new Channel()
-            {
-                Name = channelName,
-                CreatorId = userId,
-                IsDeleted = false
-            };
-
             await this.context.Channels.AddAsync(channel);
             await this.context.SaveChangesAsync();
         }
@@ -109,6 +102,12 @@ namespace TradingCardGame.Services
             return user.Channels
                 .Select(uc => uc.Channel.Name)
                 .ToList();
+        }
+
+        public bool HaveUserCreatedChannel(string userId)
+        {
+            return this.context.Channels
+                .Any(c => c.CreatorId == userId);
         }
     }
 }

@@ -2,32 +2,39 @@
 using System.Threading.Tasks;
 using TradingCardGame.Services;
 using System.Collections.Generic;
+using TradingCardGame.Data.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace TradingCardGame.Data.Seeders
 {
     public class ChannelSeeder : ISeeder
     {
-        private readonly List<string> channels = new List<string>()
+        private readonly List<Channel> channels = new List<Channel>()
         {
-            "Global Channel"
+            new Channel()
+            {
+                Name = "Global Channel",
+                Security = Enums.ChannelType.Public,
+                IsDeleted = false,
+                MaxUsers = int.MaxValue,
+            }
         };
 
         public async Task SeedAsync(ApplicationDbContext context, IServiceProvider serviceProvider)
         {
             var channelService = serviceProvider.GetRequiredService<IChannelService>();
-            foreach (var channelName in channels)
+            foreach (var channel in channels)
             {
-                await SeedRoleAsync(channelService, channelName);
+                await SeedRoleAsync(channelService, channel);
             }
         }
 
-        public static async Task SeedRoleAsync(IChannelService channelService, string channelName)
+        public static async Task SeedRoleAsync(IChannelService channelService, Channel channel)
         {
-            var channelExists = channelService.Exists(channelName);
+            var channelExists = channelService.Exists(channel.Name);
             if (!channelExists)
             {
-                await channelService.CreateAsync(channelName, null);
+                await channelService.CreateAsync(channel);
             }
         }
     }
