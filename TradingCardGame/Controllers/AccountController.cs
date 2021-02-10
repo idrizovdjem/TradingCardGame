@@ -52,9 +52,10 @@ namespace TradingCardGame.Controllers
                 return View(input);
             }
 
-            await this.channelService.AddUserToChannel(user.Id, "Global Channel", ChannelUserRole.User);
-            await this.signInManager.SignInAsync(user, true);
+            var globalChannelId = this.channelService.GetChannelIdByName("Global Channel");
 
+            await this.channelService.AddUserToChannelAsync(user.Id, globalChannelId, ChannelUserRole.User);
+            await this.signInManager.SignInAsync(user, true);
 
             return Redirect("/Channel/Index");
         }

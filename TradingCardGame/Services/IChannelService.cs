@@ -3,6 +3,7 @@ using TradingCardGame.Data.Enums;
 using System.Collections.Generic;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Models.Channel;
+using TradingCardGame.Models.Browse;
 
 namespace TradingCardGame.Services
 {
@@ -10,7 +11,7 @@ namespace TradingCardGame.Services
     {
         Task CreateAsync(Channel input);
 
-        Task AddUserToChannel(string userId, string channelName, ChannelUserRole role);
+        Task AddUserToChannelAsync(string userId, string channelId, ChannelUserRole role);
 
         string GetChannelIdByName(string channelName);
 
@@ -23,5 +24,7 @@ namespace TradingCardGame.Services
         bool HaveUserCreatedChannel(string userId);
 
         bool IsChannelNameAvailable(string channelName);
+
+        IEnumerable<BrowseChannelViewModel> GetTopTenChannels(string userId);
     }
 }

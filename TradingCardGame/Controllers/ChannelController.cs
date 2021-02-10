@@ -84,7 +84,7 @@ namespace TradingCardGame.Controllers
             };
 
             await this.channelService.CreateAsync(channel);
-            await this.channelService.AddUserToChannel(user.Id, channel.Name, ChannelUserRole.Administrator);
+            await this.channelService.AddUserToChannelAsync(user.Id, channel.Id, ChannelUserRole.Administrator);
 
             return RedirectToAction("Index");
         }

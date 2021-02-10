@@ -6,6 +6,8 @@ using TradingCardGame.Data.Enums;
 using TradingCardGame.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using TradingCardGame.Models.Channel;
+using TradingCardGame.Models.Browse;
+using TradingCardGame.Models.Enums;
 
 namespace TradingCardGame.Services
 {
@@ -20,11 +22,9 @@ namespace TradingCardGame.Services
             this.postService = postService;
         }
 
-        public async Task AddUserToChannel(string userId, string channelName, ChannelUserRole role)
+        public async Task AddUserToChannelAsync(string userId, string channelId, ChannelUserRole role)
         {
-            var channel = this.context.Channels
-                .FirstOrDefault(ch => ch.Name == channelName);
-            if(channel == null)
+            if(!this.context.Channels.Any(x => x.Id == channelId))
             {
                 return;
             }
@@ -32,7 +32,7 @@ namespace TradingCardGame.Services
             var userChannel = new UserChannels()
             {
                 UserId = userId,
-                ChannelId = channel.Id,
+                ChannelId = channelId,
                 Role = role
             };
 
@@ -103,6 +103,46 @@ namespace TradingCardGame.Services
         {
             return !this.context.Channels
                 .Any(ch => ch.Name == channelName);
+        }
+
+        public IEnumerable<BrowseChannelViewModel> GetTopTenChannels(string userId)
+        {
+            var channels =  this.context.Channels
+                .Select(x => new BrowseChannelViewModel()
+                {
+                    Id = x.Id,
+                    MaxPlayers = x.MaxUsers,
+                    Name = x.Name,
+                    CurrentPlayers = this.context.UserChannels
+                        .Count(ch => ch.ChannelId == x.Id),
+                })
+                .OrderByDescending(x => x.CurrentPlayers)
+                .Take(10)
+                .ToList();
+
+            foreach(var channel in channels)
+            {
+                channel.Status = this.GetChannelStatus(userId, channel.Id);
+            }
+
+            return channels;
+        }
+
+        public ChannelStatus GetChannelStatus(string userId, string channelId)
+        {
+            if(this.context.UserChannels
+                .Any(x => x.ChannelId == channelId && x.UserId == userId))
+            {
+                return ChannelStatus.Joined;
+            }
+
+            if(this.context.Channels
+                .FirstOrDefault(ch => ch.Id == channelId)?.Security == ChannelType.Private)
+            {
+                return ChannelStatus.Private;
+            }
+
+            return ChannelStatus.Available;
         }
     }
 }
