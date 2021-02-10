@@ -144,5 +144,27 @@ namespace TradingCardGame.Services
 
             return ChannelStatus.Available;
         }
+
+        public IEnumerable<BrowseChannelViewModel> GetChannelsContainingName(string name, string userId)
+        {
+            var channels = this.context.Channels
+                .Where(ch => ch.Name.Contains(name))
+                .Select(x => new BrowseChannelViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    CurrentPlayers = this.context.UserChannels
+                        .Count(ch => ch.ChannelId == x.Id),
+                    MaxPlayers = x.MaxUsers
+                })
+                .ToList();
+
+            foreach(var channel in channels)
+            {
+                channel.Status = this.GetChannelStatus(userId, channel.Id);
+            }
+
+            return channels;
+        }
     }
 }

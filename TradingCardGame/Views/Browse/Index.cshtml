@@ -10,9 +10,9 @@
 
 <div>
     <div class="input-group col-6 mt-3 offset-3">
-        <input class="form-control" placeholder="Start typing channel name">
+        <input class="form-control" placeholder="Start typing channel name" id="searchInput">
         <span class="input-group-btn">
-            <button class="btn btn-primary ml-3"><img src="~/icons/loupe.png" class="mr-2" />Search</button>
+            <button class="btn btn-primary ml-3" id="searchButton"><img src="~/icons/loupe.png" class="mr-2" />Search</button>
         </span>
     </div>
 
@@ -48,6 +48,6 @@
     }
 </div>
 
-<script>
-
-</script>
+@section Scripts {
+    <script src="~/js/browse.js"></script>
+}

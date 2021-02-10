@@ -40,5 +40,12 @@ namespace TradingCardGame.Controllers
             await this.channelService.AddUserToChannelAsync(userId, channelId, Data.Enums.ChannelUserRole.User);
             return Redirect("Index");
         }
+
+        public IActionResult GetChannelsContainingName(string name)
+        {
+            var userId = this.userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
+            var channels = this.channelService.GetChannelsContainingName(name, userId);
+            return Json(channels);
+        }
     }
 }

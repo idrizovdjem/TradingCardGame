@@ -26,5 +26,7 @@ namespace TradingCardGame.Services
         bool IsChannelNameAvailable(string channelName);
 
         IEnumerable<BrowseChannelViewModel> GetTopTenChannels(string userId);
+
+        IEnumerable<BrowseChannelViewModel> GetChannelsContainingName(string name, string userId);
     }
 }
