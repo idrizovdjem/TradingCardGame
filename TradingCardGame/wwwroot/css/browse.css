@@ -1,0 +1,53 @@
+﻿.channels {
+    width: 80%;
+    margin: 10px auto;
+    overflow-y: auto;
+    height: 80vh;
+}
+
+.channel {
+    width: 100%;
+    border: 1px solid black;
+    font-size: 25px;
+    height: 50px;
+    padding-top: 4px;
+    margin-top: 1px;
+    border-radius: 2px;
+}
+
+.channel-number {
+    width: 10%;
+    float: left;
+    padding-left: 15px;
+}
+
+.channel-name {
+    width: 50%;
+    float: left;
+}
+
+.channel-players {
+    width: 20%;
+    float: left;
+}
+
+.channel-status {
+    width: 20%;
+    float: left;
+}
+
+.channel:hover {
+    background-color: lightgray;
+}
+
+.channel-header {
+    width: 80%;
+    border: 1px solid black;
+    font-size: 25px;
+    height: 50px;
+    padding-top: 4px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    border-radius: 2px;
+}

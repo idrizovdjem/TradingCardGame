@@ -1,0 +1,53 @@
+﻿@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Browse";
+    int counter = 1;
+}
+
+@model IEnumerable<TradingCardGame.Models.Browse.BrowseChannelViewModel>
+
+<link rel="stylesheet" href="~/css/browse.css" />
+
+<div>
+    <div class="input-group col-6 mt-3 offset-3">
+        <input class="form-control" placeholder="Start typing channel name">
+        <span class="input-group-btn">
+            <button class="btn btn-primary ml-3"><img src="~/icons/loupe.png" class="mr-2" />Search</button>
+        </span>
+    </div>
+
+</div>
+
+<div class="channel-header">
+    <div class="channel-number">#</div>
+    <div class="channel-name">Name</div>
+    <div class="channel-players">Players</div>
+    <div class="channel-status">Status</div>
+</div>
+
+<div class="channels">
+    @foreach (var channel in Model)
+    {
+        <div class="channel">
+            <div class="channel-number">@(counter++)</div>
+            <div class="channel-name">@channel.Name</div>
+            <div class="channel-players">@channel.CurrentPlayers / @channel.MaxPlayers</div>
+            <div class="channel-status">@{
+                if(channel.Status == TradingCardGame.Models.Enums.ChannelStatus.Available)
+                {
+                    <a asp-controller="Browse" asp-action="JoinChannel" asp-route-channelId="@channel.Id" class="btn btn-primary text-white w-75">Join</a>
+                } else if(channel.Status == TradingCardGame.Models.Enums.ChannelStatus.Joined)
+                {
+                    <button class="btn btn-warning text-white w-75" disabled>Already joined</button>
+                } else if(channel.Status == TradingCardGame.Models.Enums.ChannelStatus.Private)
+                {
+                    <button class="btn btn-danger text-white w-75" disabled>Channel is Private</button>
+                }
+            }</div>
+        </div>
+    }
+</div>
+
+<script>
+
+</script>
