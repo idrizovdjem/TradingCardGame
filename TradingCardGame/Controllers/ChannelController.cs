@@ -68,6 +68,12 @@ namespace TradingCardGame.Controllers
                 return View(input);
             }
 
+            if(!this.channelService.IsChannelNameAvailable(input.Name))
+            {
+                ModelState.AddModelError("Name", "Channel name is already taken.");
+                return View(input);
+            }
+
             var channel = new Channel()
             {
                 CreatorId = user.Id,

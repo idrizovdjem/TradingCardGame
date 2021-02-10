@@ -46,22 +46,6 @@ namespace TradingCardGame.Services
             await this.context.SaveChangesAsync();
         }
 
-        public bool Exists(string channelName)
-        {
-            return this.context.Channels.Any(channel => channel.Name == channelName);
-        }
-
-        public ChannelViewModel GetChannelByName(string channelName)
-        {
-            var channel = new ChannelViewModel()
-            {
-                Name = channelName
-                // add channel content
-            };
-            
-            return channel;
-        }
-
         public ChannelViewModel GetChannelContent(string channelName, string userId)
         {
             var channelId = this.GetChannelIdByName(channelName);
@@ -104,10 +88,21 @@ namespace TradingCardGame.Services
                 .ToList();
         }
 
+        public bool Exists(string channelName)
+        {
+            return this.context.Channels.Any(channel => channel.Name == channelName);
+        }
+
         public bool HaveUserCreatedChannel(string userId)
         {
             return this.context.Channels
                 .Any(c => c.CreatorId == userId);
+        }
+
+        public bool IsChannelNameAvailable(string channelName)
+        {
+            return !this.context.Channels
+                .Any(ch => ch.Name == channelName);
         }
     }
 }

@@ -8,20 +8,20 @@ namespace TradingCardGame.Services
 {
     public interface IChannelService
     {
-        bool Exists(string channelName);
-
         Task CreateAsync(Channel input);
-
-        List<string> GetUserChannels(string userId);
-
-        ChannelViewModel GetChannelByName(string channelName);
 
         Task AddUserToChannel(string userId, string channelName, ChannelUserRole role);
 
-        ChannelViewModel GetChannelContent(string channelName, string userId);
-
         string GetChannelIdByName(string channelName);
 
+        List<string> GetUserChannels(string userId);
+
+        ChannelViewModel GetChannelContent(string channelName, string userId);
+
+        bool Exists(string channelName);
+
         bool HaveUserCreatedChannel(string userId);
+
+        bool IsChannelNameAvailable(string channelName);
     }
 }
