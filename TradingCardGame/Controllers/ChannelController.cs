@@ -5,9 +5,11 @@ using TradingCardGame.Data.Enums;
 using TradingCardGame.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using TradingCardGame.Models.Channel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TradingCardGame.Controllers
 {
+    [Authorize]
     [AutoValidateAntiforgeryToken]
     public class ChannelController : Controller
     {
@@ -23,10 +25,6 @@ namespace TradingCardGame.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return Redirect("/Account/Login");
-            }
 
             var channel = new ChannelIndexViewModel()
             {
@@ -43,14 +41,8 @@ namespace TradingCardGame.Controllers
             return Json(channelContent);
         }
 
-        public async Task<IActionResult> CreateChannel()
+        public IActionResult CreateChannel()
         {
-            var user = await this.userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return Redirect("/Account/Login");
-            }
-
             return View();
         }
 
@@ -58,10 +50,6 @@ namespace TradingCardGame.Controllers
         public async Task<IActionResult> CreateChannel(CreateChannelInputModel input)
         {
             var user = await this.userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return Redirect("/Account/Login");
-            }
 
             if(!ModelState.IsValid)
             {
@@ -87,6 +75,11 @@ namespace TradingCardGame.Controllers
             await this.channelService.AddUserToChannelAsync(user.Id, channel.Id, ChannelUserRole.Administrator);
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Settings(string name)
+        {
+            return View();
         }
     }
 }

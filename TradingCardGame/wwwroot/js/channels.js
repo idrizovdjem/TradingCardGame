@@ -35,6 +35,24 @@ function renderChannelContent(name, posts) {
     const headerElement = document.querySelector('h1.header');
     headerElement.textContent = name;
 
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', '/Channel/Settings?name=' + name);
+
+    const gearElement = document.createElement('img');
+    gearElement.setAttribute('src', '../icons/gear.png');
+    gearElement.classList.add('gear');
+    linkElement.appendChild(gearElement);
+
+    gearElement.addEventListener('mouseover', () => {
+        gearElement.setAttribute('src', '../icons/blackGear.png');
+    });
+
+    gearElement.addEventListener('mouseleave', () => {
+        gearElement.setAttribute('src', '../icons/gear.png');
+    });
+
+    headerElement.appendChild(linkElement);
+
     const channelPostsElement = document.querySelector('div.channel-posts');
     channelPostsElement.innerHTML = '';
 

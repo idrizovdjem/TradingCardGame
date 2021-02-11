@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using TradingCardGame.Services;
 using TradingCardGame.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TradingCardGame.Controllers
 {
+    [Authorize]
     public class BrowseController : Controller
     {
         private readonly IChannelService channelService;
@@ -19,11 +21,6 @@ namespace TradingCardGame.Controllers
 
         public IActionResult Index()
         {
-            if(User == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
             var userId = this.userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             var topTenChannels = this.channelService.GetTopTenChannels(userId);
             return View(topTenChannels);
@@ -31,11 +28,6 @@ namespace TradingCardGame.Controllers
 
         public async Task<IActionResult> JoinChannel(string channelId)
         {
-            if (User == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
             var userId = this.userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
             await this.channelService.AddUserToChannelAsync(userId, channelId, Data.Enums.ChannelUserRole.User);
             return Redirect("Index");

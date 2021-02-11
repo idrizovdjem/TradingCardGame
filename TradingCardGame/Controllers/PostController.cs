@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Models.Posts;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TradingCardGame.Controllers
 {
+    [Authorize]
     [AutoValidateAntiforgeryToken]
     public class PostController : Controller
     {

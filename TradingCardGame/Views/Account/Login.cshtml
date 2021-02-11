@@ -8,7 +8,7 @@
 <div class="col-md-4 offset-4 mt-5">
     <h1>@ViewData["Title"]</h1>
     <section>
-        <form id="account" method="post">
+        <form id="account" method="post" asp-controller="Account" asp-action="Login">
             <h4>Use a local account to log in.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>

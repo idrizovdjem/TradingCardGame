@@ -98,3 +98,9 @@
     overflow-y: auto;
     height: 85vh;
 }
+
+.gear {
+    float: right;
+    margin-right: 30px;
+    cursor: pointer;
+}
