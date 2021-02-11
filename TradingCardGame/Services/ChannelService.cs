@@ -239,5 +239,22 @@ namespace TradingCardGame.Services
 
             return channel;
         }
+
+        public async Task UpdateChannelAsync(CreateChannelInputModel input, string userId)
+        {
+            var userChannel = this.context.Channels
+                .FirstOrDefault(x => x.CreatorId == userId);
+
+            if(userChannel == null)
+            {
+                return;
+            }
+
+            userChannel.Name = input.Name;
+            userChannel.MaxUsers = input.MaxPlayers;
+            userChannel.Security = input.Security;
+
+            await this.context.SaveChangesAsync();
+        }
     }
 }

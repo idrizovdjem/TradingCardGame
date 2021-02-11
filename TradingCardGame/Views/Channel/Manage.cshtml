@@ -3,23 +3,30 @@
     ViewData["Title"] = "Manage";
 }
 
+@model TradingCardGame.Models.Channel.CreateChannelInputModel 
+
 <div>
     <div class="manage-container">
-        <div class="input-container">
-            <span class="manage-label">Name:</span>
-            <input class="manage-input mt-2" />
-        </div>
-        <div class="input-container">
-            <span class="manage-label">Max Players:</span>
-            <input class="manage-input mt-2" type="number" />
-        </div>
-        <div class="input-container">
-            <span class="manage-label">Security:</span>
-            <select class="custom-select manage-select mt-2">
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-            </select>
-        </div>
+        <form asp-controller="Channel" asp-action="Manage">
+            <div class="input-container">
+                <span class="manage-label">Name:</span>
+                <input class="manage-input mt-2" asp-for="Name"/>
+            </div>
+            <div class="input-container">
+                <span class="manage-label">Max Players:</span>
+                <input class="manage-input mt-2" type="number" asp-for="MaxPlayers"/>
+            </div>
+            <div class="input-container">
+                <span class="manage-label">Security:</span>
+                <select class="custom-select manage-select mt-2" asp-for="Security">
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                </select>
+            </div>
+            <div class="change-container">
+                <button class="btn btn-primary w-100">Save Changes</button>
+            </div>
+        </form>        
     </div>
     <div class="users-cards-container">
         <div class="manage-nav">
@@ -72,5 +79,10 @@
     .manage-nav-item:hover {
         background-color: lightgray;
         cursor: pointer;
+    }
+
+    .change-container {
+        width: 50%;
+        margin: 10px auto;
     }
 </style>

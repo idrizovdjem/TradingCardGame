@@ -13,13 +13,15 @@ namespace TradingCardGame.Controllers
     [AutoValidateAntiforgeryToken]
     public class ChannelController : Controller
     {
+        private readonly IUserService userService;
         private readonly IChannelService channelService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public ChannelController(IChannelService channelService, UserManager<ApplicationUser> userManager)
+        public ChannelController(IUserService userService, IChannelService channelService, UserManager<ApplicationUser> userManager)
         {
             this.channelService = channelService;
             this.userManager = userManager;
+            this.userService = userService;
         }
 
         public async Task<IActionResult> Index()
@@ -107,6 +109,37 @@ namespace TradingCardGame.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Manage(CreateChannelInputModel input)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            var user = await this.userManager.GetUserAsync(User);
+
+            var userChannel = this.userService.GetUsersChannel(user.Id);
+            if(userChannel.Name != input.Name)
+            {
+                if(!this.channelService.IsChannelNameAvailable(input.Name))
+                {
+                    ModelState.AddModelError("Name", "Channel name is taken");
+                    return View(input);
+                }
+            }
+
+            if(input.MaxPlayers < userChannel.CurrentPlayers)
+            {
+                ModelState.AddModelError("MaxPlayers", "Can't set max players below current players count");
+                return View(input);
+            }
+
+            await this.channelService.UpdateChannelAsync(input, user.Id);
+
+            return RedirectToAction("Index");
         }
     }
 }

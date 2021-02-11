@@ -52,6 +52,7 @@ namespace TradingCardGame
 
             services.AddTransient<IChannelService, ChannelService>();
             services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

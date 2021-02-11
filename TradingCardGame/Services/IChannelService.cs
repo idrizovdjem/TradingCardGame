@@ -33,6 +33,8 @@ namespace TradingCardGame.Services
 
         Task RemoveUserFromChannelAsync(string channelName, string userId);
 
+        Task UpdateChannelAsync(CreateChannelInputModel input, string userId);
+
         ChannelInformationViewModel GetChannelInformation(string channelName);
     }
 }
