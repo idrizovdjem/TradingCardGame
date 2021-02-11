@@ -108,6 +108,7 @@ namespace TradingCardGame.Services
         public IEnumerable<BrowseChannelViewModel> GetTopTenChannels(string userId)
         {
             var channels =  this.context.Channels
+                .Where(ch => ch.IsDeleted == false)
                 .Select(x => new BrowseChannelViewModel()
                 {
                     Id = x.Id,
@@ -148,7 +149,7 @@ namespace TradingCardGame.Services
         public IEnumerable<BrowseChannelViewModel> GetChannelsContainingName(string name, string userId)
         {
             var channels = this.context.Channels
-                .Where(ch => ch.Name.Contains(name))
+                .Where(ch => ch.Name.Contains(name) && ch.IsDeleted == false)
                 .Select(x => new BrowseChannelViewModel()
                 {
                     Id = x.Id,
@@ -165,6 +166,37 @@ namespace TradingCardGame.Services
             }
 
             return channels;
+        }
+
+        public async Task RemoveUserFromChannelAsync(string channelName, string userId)
+        {
+            var channelId = this.GetChannelIdByName(channelName);
+
+            var userChannel = this.context.UserChannels
+                .FirstOrDefault(ch => ch.ChannelId == channelId && ch.UserId == userId);
+
+            if(userChannel == null)
+            {
+                return;
+            }
+
+            this.context.UserChannels.Remove(userChannel);
+
+            var userChannelsCount = this.context.UserChannels
+                .Count(ch => ch.ChannelId == channelId) - 1;
+
+            if(userChannelsCount == 0)
+            {
+                var channel = this.context.Channels
+                    .FirstOrDefault(ch => ch.Id == channelId);
+
+                if(channel != null)
+                {
+                    channel.IsDeleted = true;
+                }
+            }
+
+            await this.context.SaveChangesAsync();
         }
     }
 }

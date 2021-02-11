@@ -77,9 +77,18 @@ namespace TradingCardGame.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Settings(string name)
+        public async Task<IActionResult> Leave(string channelName)
         {
-            return View();
+            var user = await this.userManager.GetUserAsync(User);
+
+            if(channelName == "Global Channel")
+            {
+                return RedirectToAction("Index");
+            }
+
+            await this.channelService.RemoveUserFromChannelAsync(channelName, user.Id);
+
+            return RedirectToAction("Index");
         }
     }
 }

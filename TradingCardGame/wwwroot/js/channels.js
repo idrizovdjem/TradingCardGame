@@ -32,26 +32,33 @@ function getSelectedChannel() {
 }
 
 function renderChannelContent(name, posts) {
+    const cardsElement = document.createElement('a');
+    cardsElement.classList.add('channel-nav-item');
+    cardsElement.textContent = 'Cards';
+
+    const informationElement = document.createElement('a');
+    informationElement.classList.add('channel-nav-item');
+    informationElement.textContent = 'Information';
+
+    const manageElement = document.createElement('a');
+    manageElement.classList.add('channel-nav-item');
+    manageElement.textContent = 'Manage';
+
+    const leaveElement = document.createElement('a');
+    leaveElement.classList.add('channel-nav-item');
+    leaveElement.textContent = 'Leave';
+    leaveElement.setAttribute('href', '/Channel/Leave?channelName=' + name);
+
+    const channelNavElement = document.getElementById('channelNav');
+    channelNavElement.innerHTML = '';
+    channelNavElement.classList.add('channel-nav');
+    channelNavElement.appendChild(cardsElement);
+    channelNavElement.appendChild(informationElement);
+    channelNavElement.appendChild(manageElement);
+    channelNavElement.appendChild(leaveElement);
+
     const headerElement = document.querySelector('h1.header');
     headerElement.textContent = name;
-
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', '/Channel/Settings?name=' + name);
-
-    const gearElement = document.createElement('img');
-    gearElement.setAttribute('src', '../icons/gear.png');
-    gearElement.classList.add('gear');
-    linkElement.appendChild(gearElement);
-
-    gearElement.addEventListener('mouseover', () => {
-        gearElement.setAttribute('src', '../icons/blackGear.png');
-    });
-
-    gearElement.addEventListener('mouseleave', () => {
-        gearElement.setAttribute('src', '../icons/gear.png');
-    });
-
-    headerElement.appendChild(linkElement);
 
     const channelPostsElement = document.querySelector('div.channel-posts');
     channelPostsElement.innerHTML = '';

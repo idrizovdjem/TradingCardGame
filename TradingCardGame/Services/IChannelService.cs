@@ -28,5 +28,7 @@ namespace TradingCardGame.Services
         IEnumerable<BrowseChannelViewModel> GetTopTenChannels(string userId);
 
         IEnumerable<BrowseChannelViewModel> GetChannelsContainingName(string name, string userId);
+
+        Task RemoveUserFromChannelAsync(string channelName, string userId);
     }
 }
