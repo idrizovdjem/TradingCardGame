@@ -25,6 +25,8 @@ namespace TradingCardGame.Services
 
         bool IsChannelNameAvailable(string channelName);
 
+        bool IsUserOwner(string channelName, string userId);
+
         IEnumerable<BrowseChannelViewModel> GetTopTenChannels(string userId);
 
         IEnumerable<BrowseChannelViewModel> GetChannelsContainingName(string name, string userId);

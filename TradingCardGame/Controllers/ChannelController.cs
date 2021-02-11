@@ -96,5 +96,17 @@ namespace TradingCardGame.Controllers
             var channelInformation = this.channelService.GetChannelInformation(channelName);
             return View(channelInformation);
         }
+
+        public async Task<IActionResult> Manage(string channelName)
+        {
+            var user = await this.userManager.GetUserAsync(User);
+
+            if(!this.channelService.IsUserOwner(channelName, user.Id))
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
     }
 }

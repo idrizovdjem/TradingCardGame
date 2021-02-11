@@ -11,11 +11,11 @@
     margin: 10px 0;
 }
 
-    .input-container input {
-        float: right;
-        width: 55%;
-        font-size: 20px;
-    }
+.input-container input {
+    float: right;
+    width: 55%;
+    font-size: 20px;
+}
 
 .back-container {
     width: 50%;

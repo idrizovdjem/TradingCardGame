@@ -96,13 +96,19 @@ namespace TradingCardGame.Services
         public bool HaveUserCreatedChannel(string userId)
         {
             return this.context.Channels
-                .Any(c => c.CreatorId == userId);
+                .Any(c => c.CreatorId == userId && c.IsDeleted == false);
         }
 
         public bool IsChannelNameAvailable(string channelName)
         {
             return !this.context.Channels
                 .Any(ch => ch.Name == channelName);
+        }
+
+        public bool IsUserOwner(string channelName, string userId)
+        {
+            return this.context.Channels
+                .Any(ch => ch.Name == channelName && ch.CreatorId == userId && ch.IsDeleted == false);
         }
 
         public IEnumerable<BrowseChannelViewModel> GetTopTenChannels(string userId)
