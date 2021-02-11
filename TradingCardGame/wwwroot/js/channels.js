@@ -39,6 +39,7 @@ function renderChannelContent(name, posts) {
     const informationElement = document.createElement('a');
     informationElement.classList.add('channel-nav-item');
     informationElement.textContent = 'Information';
+    informationElement.setAttribute('href', '/Channel/Information?channelName=' + name);
 
     const manageElement = document.createElement('a');
     manageElement.classList.add('channel-nav-item');

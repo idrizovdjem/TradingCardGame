@@ -12,6 +12,7 @@ namespace TradingCardGame.Data.Models
             this.Id = Guid.NewGuid().ToString();
             this.Users = new List<UserChannels>();
             this.Posts = new List<Post>();
+            this.Cards = new List<Card>();
         }
 
         public string Id { get; set; }
@@ -33,5 +34,7 @@ namespace TradingCardGame.Data.Models
         public ICollection<UserChannels> Users { get; set; }
 
         public ICollection<Post> Posts { get; set; }
+
+        public ICollection<Card> Cards { get; set; } 
     }
 }

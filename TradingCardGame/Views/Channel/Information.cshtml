@@ -1,0 +1,39 @@
+﻿@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Information";
+}
+
+@model TradingCardGame.Models.Channel.ChannelInformationViewModel
+
+<link rel="stylesheet" href="~/css/information.css" />
+
+<div class="information-container">
+    <div class="input-container">
+        <span class="information-label">Name: </span>
+        <input class="mt-2" disabled asp-for="Name"/>
+    </div>
+    <div class="input-container">
+        <span class="information-label">Current Players: </span>
+        <input class="mt-2" type="number" disabled asp-for="CurrentPlayers"/>
+    </div>
+    <div class="input-container">
+        <span class="information-label">Max Players: </span>
+        <input class="mt-2" type="number" disabled asp-for="MaxPlayers"/>
+    </div>
+    <div class="input-container">
+        <span class="information-label">Posts Count: </span>
+        <input class="mt-2" type="number" disabled asp-for="PostsCount"/>
+    </div>
+    <div class="input-container">
+        <span class="information-label">Total Likes: </span>
+        <input class="mt-2" type="number" disabled asp-for="TotalLikes"/>
+    </div>
+    <div class="input-container">
+        <span class="information-label">Cards count: </span>
+        <input class="mt-2" type="number" disabled asp-for="CardsCount"/>
+    </div>
+
+    <div class="back-container">
+        <a class="btn btn-primary w-100 mt-2 text-white" asp-controller="Channel" asp-action="Index">Go Back</a>
+    </div>
+</div> 

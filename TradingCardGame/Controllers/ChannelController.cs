@@ -90,5 +90,11 @@ namespace TradingCardGame.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Information(string channelName)
+        {
+            var channelInformation = this.channelService.GetChannelInformation(channelName);
+            return View(channelInformation);
+        }
     }
 }

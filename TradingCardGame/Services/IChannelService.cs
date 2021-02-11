@@ -30,5 +30,7 @@ namespace TradingCardGame.Services
         IEnumerable<BrowseChannelViewModel> GetChannelsContainingName(string name, string userId);
 
         Task RemoveUserFromChannelAsync(string channelName, string userId);
+
+        ChannelInformationViewModel GetChannelInformation(string channelName);
     }
 }

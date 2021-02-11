@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using TradingCardGame.Data.Enums;
 using TradingCardGame.Data.Models;
-using Microsoft.EntityFrameworkCore;
-using TradingCardGame.Models.Channel;
-using TradingCardGame.Models.Browse;
 using TradingCardGame.Models.Enums;
+using Microsoft.EntityFrameworkCore;
+using TradingCardGame.Models.Browse;
+using TradingCardGame.Models.Channel;
 
 namespace TradingCardGame.Services
 {
@@ -197,6 +197,41 @@ namespace TradingCardGame.Services
             }
 
             await this.context.SaveChangesAsync();
+        }
+
+        public ChannelInformationViewModel GetChannelInformation(string channelName)
+        {
+            var channel = this.context.Channels
+                .Where(ch => ch.Name == channelName)
+                .Select(x => new ChannelInformationViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    CurrentPlayers = this.context.UserChannels
+                        .Count(ch => ch.ChannelId == x.Id),
+                    MaxPlayers = x.MaxUsers,
+                    PostsCount = this.context.Posts
+                        .Count(p => p.ChannelId == x.Id && p.IsDeleted == false),
+                    CardsCount = this.context.Cards
+                        .Count(c => c.ChannelId == x.Id)
+                })
+                .FirstOrDefault();
+
+            var channelPosts = this.context.Posts
+                .Where(p => p.ChannelId == channel.Id && p.IsDeleted == false)
+                .ToList();
+
+            var totalLikes = 0;
+            foreach(var post in channelPosts)
+            {
+                var postLikes = this.context.PostVotes
+                    .Count(pv => pv.PostId == post.Id && pv.IsDeleted == false);
+                totalLikes += postLikes;
+            }
+
+            channel.TotalLikes = totalLikes;
+
+            return channel;
         }
     }
 }

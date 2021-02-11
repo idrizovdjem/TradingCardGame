@@ -28,5 +28,15 @@ namespace TradingCardGame.Data.Models
         public int Attack { get; set; }
 
         public int Defense { get; set; }
+
+        [Required]
+        public string ChannelId { get; set; }
+
+        public Channel Channel { get; set; }
+
+        [Required]
+        public string CreatorId { get; set; }
+
+        public ApplicationUser Creator { get; set; }
     }
 }
