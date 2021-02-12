@@ -5,9 +5,12 @@
 
 @model TradingCardGame.Models.Channel.CreateChannelInputModel 
 
+<link rel="stylesheet" href="~/css/manage.css" />
+
 <div>
     <div class="manage-container">
         <form asp-controller="Channel" asp-action="Manage">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="input-container">
                 <span class="manage-label">Name:</span>
                 <input class="manage-input mt-2" asp-for="Name"/>
@@ -33,56 +36,22 @@
             <div class="manage-nav-item">Users</div>
             <div class="manage-nav-item">Cards</div>
         </div>
+        <div class="data-container">
+            <div class="user-card">
+                <span class="user-email">User email</span>
+                <span class="delete-user">X</span>
+                <span class="user-role">
+                    <select>
+                        <option>Moderator</option>
+                        <option>User</option>
+                    </select>
+                </span>
+            </div>
+         
+        </div>
     </div>
 </div>
 
-<style>
-    .manage-container {
-        width: 50%;
-        float: left;
-    }
-
-    .manage-label {
-        font-size: 30px;
-        margin-left: 10px;
-    }
-
-    .manage-input {
-        width: 65%;
-        float: right;
-        font-size: 20px;
-    }
-
-    .manage-select {
-        width: 65%;
-        float: right;
-        border: 1px solid grey;
-    }
-
-    .users-cards-container {
-        width: 50%;
-        float: left;
-    }
-
-    .manage-nav {
-        width: 100%;
-        height: 50px;
-        text-align: center;
-    }
-
-    .manage-nav-item {
-        float: left;
-        width: 50%;
-        font-size: 30px;
-    }
-
-    .manage-nav-item:hover {
-        background-color: lightgray;
-        cursor: pointer;
-    }
-
-    .change-container {
-        width: 50%;
-        margin: 10px auto;
-    }
-</style>
+@section Scripts {
+    <script src="~/js/manage.js"></script>
+}

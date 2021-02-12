@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Models.Channel;
 using TradingCardGame.Models.Browse;
+using TradingCardGame.Models.Account;
 
 namespace TradingCardGame.Services
 {
@@ -14,6 +15,8 @@ namespace TradingCardGame.Services
         Task AddUserToChannelAsync(string userId, string channelId, ChannelUserRole role);
 
         string GetChannelIdByName(string channelName);
+
+        string GetChannelName(string userId);
 
         List<string> GetUserChannels(string userId);
 
@@ -35,6 +38,10 @@ namespace TradingCardGame.Services
 
         Task UpdateChannelAsync(CreateChannelInputModel input, string userId);
 
+        Task AddUserToRoleAsync(string creatorId, string userId, ChannelUserRole role);
+
         ChannelInformationViewModel GetChannelInformation(string channelName);
+
+        IEnumerable<UserChannelViewModel> GetChannelUsers(string userId);
     }
 }

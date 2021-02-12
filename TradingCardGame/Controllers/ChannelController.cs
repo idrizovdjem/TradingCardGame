@@ -6,6 +6,7 @@ using TradingCardGame.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using TradingCardGame.Models.Channel;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace TradingCardGame.Controllers
 {
@@ -140,6 +141,39 @@ namespace TradingCardGame.Controllers
             await this.channelService.UpdateChannelAsync(input, user.Id);
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> GetUsers()
+        {
+            var user = await this.userManager.GetUserAsync(User);
+            var channelUsers = this.channelService.GetChannelUsers(user.Id);
+            return Json(channelUsers);
+        }
+
+        public async Task<IActionResult> RemoveUser(string userId)
+        {
+            var channelOwner = await this.userManager.GetUserAsync(User);
+            var channelName = this.channelService.GetChannelName(channelOwner.Id);
+
+            await this.channelService.RemoveUserFromChannelAsync(channelName, userId);
+
+            return Ok();
+        }
+
+        public async Task<IActionResult> ChangeRole(string userId, string role)
+        {
+            ChannelUserRole channelRole;
+            var isRoleParsed = Enum.TryParse(role, out channelRole);
+            if(!isRoleParsed)
+            {
+                return BadRequest();
+            }
+
+            var channelOnwer = await this.userManager.GetUserAsync(User);
+
+            await this.channelService.AddUserToRoleAsync(channelOnwer.Id, userId, channelRole);
+
+            return Ok();
         }
     }
 }

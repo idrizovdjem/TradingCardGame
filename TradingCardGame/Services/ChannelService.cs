@@ -8,6 +8,7 @@ using TradingCardGame.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using TradingCardGame.Models.Browse;
 using TradingCardGame.Models.Channel;
+using TradingCardGame.Models.Account;
 
 namespace TradingCardGame.Services
 {
@@ -253,6 +254,73 @@ namespace TradingCardGame.Services
             userChannel.Name = input.Name;
             userChannel.MaxUsers = input.MaxPlayers;
             userChannel.Security = input.Security;
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public IEnumerable<UserChannelViewModel> GetChannelUsers(string userId)
+        {
+            var channelId = this.context.Channels
+                 .Where(x => x.CreatorId == userId && x.IsDeleted == false)
+                 .Select(x => x.Id)
+                 .FirstOrDefault();
+
+            if(channelId == null)
+            {
+                return null;
+            }
+
+            var activeUsers = this.context.UserChannels
+                .Where(x => x.ChannelId == channelId && x.UserId != userId)
+                .Select(x => x.UserId)
+                .ToList();
+
+            var users = new List<UserChannelViewModel>();
+            foreach(var activeId in activeUsers)
+            {
+                var user = this.context.Users
+                    .Where(x => x.Id == activeId)
+                    .Select(x => new UserChannelViewModel()
+                    {
+                        Id = x.Id,
+                        Email = x.Email
+                    })
+                    .FirstOrDefault();
+
+                user.Role = this.context.UserChannels
+                    .Where(x => x.UserId == user.Id && x.ChannelId == channelId)
+                    .Select(x => x.Role.ToString())
+                    .FirstOrDefault();
+
+                users.Add(user);
+            }
+
+            return users;
+        }
+
+        public string GetChannelName(string userId)
+        {
+            return this.context.Channels
+                .Where(x => x.CreatorId == userId && x.IsDeleted == false)
+                .Select(x => x.Name)
+                .FirstOrDefault();
+        }
+
+        public async Task AddUserToRoleAsync(string creatorId, string userId, ChannelUserRole role)
+        {
+            var channelId = this.context.Channels
+                .Where(x => x.CreatorId == creatorId && x.IsDeleted == false)
+                .Select(x => x.Id)
+                .FirstOrDefault();
+
+            if(channelId == null)
+            {
+                return;
+            }
+
+            var userChannel = this.context.UserChannels
+                .FirstOrDefault(x => x.UserId == userId && x.ChannelId == channelId);
+            userChannel.Role = role;
 
             await this.context.SaveChangesAsync();
         }
