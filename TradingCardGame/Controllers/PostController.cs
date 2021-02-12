@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
-using TradingCardGame.Services;
+
 using Microsoft.AspNetCore.Mvc;
-using TradingCardGame.Data.Models;
-using TradingCardGame.Models.Posts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+
+using TradingCardGame.Services;
+using TradingCardGame.Data.Models;
+using TradingCardGame.Models.Posts;
 
 namespace TradingCardGame.Controllers
 {

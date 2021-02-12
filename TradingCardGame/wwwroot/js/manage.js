@@ -12,7 +12,7 @@
         deleteUserElement.classList.add('delete-user');
         deleteUserElement.textContent = 'X';
         deleteUserElement.addEventListener('click', () => {
-            fetch('/Channel/RemoveUser?userId=' + user.id);
+            fetch('/Manage/RemoveUser?userId=' + user.id);
             userCardElement.remove();
         });
 
@@ -40,7 +40,7 @@
                 return;
             }
 
-            fetch(`/Channel/ChangeRole?userId=${user.id}&role=${selected}`);
+            fetch(`/Manage/ChangeRole?userId=${user.id}&role=${selected}`);
         });
 
         const userRoleElement = document.createElement('span');
@@ -59,7 +59,7 @@
 }
 
 function getUsers() {
-    return fetch('/Channel/GetUsers')
+    return fetch('/Manage/GetUsers')
         .then(response => response.json())
         .then(data => data);
 }

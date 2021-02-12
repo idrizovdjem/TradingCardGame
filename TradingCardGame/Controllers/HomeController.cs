@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
-using TradingCardGame.Models;
+
 using Microsoft.AspNetCore.Mvc;
+
+using TradingCardGame.Models;
 
 namespace TradingCardGame.Controllers
 {

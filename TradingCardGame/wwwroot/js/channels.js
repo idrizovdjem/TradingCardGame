@@ -39,17 +39,17 @@ function renderChannelContent(name, posts) {
     const informationElement = document.createElement('a');
     informationElement.classList.add('channel-nav-item');
     informationElement.textContent = 'Information';
-    informationElement.setAttribute('href', '/Channel/Information?channelName=' + name);
+    informationElement.setAttribute('href', '/Manage/Information?channelName=' + name);
 
     const manageElement = document.createElement('a');
     manageElement.classList.add('channel-nav-item');
     manageElement.textContent = 'Manage';
-    manageElement.setAttribute('href', '/Channel/Manage?channelName=' + name);
+    manageElement.setAttribute('href', '/Manage/Index?channelName=' + name);
 
     const leaveElement = document.createElement('a');
     leaveElement.classList.add('channel-nav-item');
     leaveElement.textContent = 'Leave';
-    leaveElement.setAttribute('href', '/Channel/Leave?channelName=' + name);
+    leaveElement.setAttribute('href', '/Manage/Leave?channelName=' + name);
 
     const channelNavElement = document.getElementById('channelNav');
     channelNavElement.innerHTML = '';

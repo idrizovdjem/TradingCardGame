@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
-using TradingCardGame.Services;
-using TradingCardGame.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+
+using TradingCardGame.Services;
+using TradingCardGame.Data.Models;
 
 namespace TradingCardGame.Controllers
 {
