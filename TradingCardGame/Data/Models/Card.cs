@@ -34,6 +34,8 @@ namespace TradingCardGame.Data.Models
 
         public Channel Channel { get; set; }
 
+        public CardStatus Status { get; set; }
+
         [Required]
         public string CreatorId { get; set; }
 

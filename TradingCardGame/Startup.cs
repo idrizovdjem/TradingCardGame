@@ -1,16 +1,17 @@
-using TradingCardGame.Data;
-using TradingCardGame.Data.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TradingCardGame.Data.Seeders;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
+
+using TradingCardGame.Data;
 using TradingCardGame.Services;
+using TradingCardGame.Data.Models;
+using TradingCardGame.Data.Seeders;
 
 namespace TradingCardGame
 {
@@ -50,9 +51,10 @@ namespace TradingCardGame
                 }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
-            services.AddTransient<IChannelService, ChannelService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICardService, CardService>();
+            services.AddTransient<IChannelService, ChannelService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

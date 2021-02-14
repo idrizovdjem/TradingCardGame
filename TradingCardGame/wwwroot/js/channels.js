@@ -35,6 +35,7 @@ function renderChannelContent(name, posts) {
     const cardsElement = document.createElement('a');
     cardsElement.classList.add('channel-nav-item');
     cardsElement.textContent = 'Cards';
+    cardsElement.setAttribute('href', '/Card/Index?channelName=' + name);
 
     const informationElement = document.createElement('a');
     informationElement.classList.add('channel-nav-item');
@@ -245,5 +246,5 @@ function likePost(post, scoreElement, likeElement) {
 
 window.onload = function () {
     const userChannels = document.querySelector('div.user-channels');
-    userChannels.children[1].click();
+    userChannels.children[0].click();
 }
