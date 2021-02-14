@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 
-using TradingCardGame.Services;
 using TradingCardGame.Data.Enums;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Models.Channel;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Controllers
 {

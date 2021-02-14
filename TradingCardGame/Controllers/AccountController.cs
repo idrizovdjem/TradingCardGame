@@ -3,10 +3,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 
-using TradingCardGame.Services;
-using TradingCardGame.Data.Enums;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Models.Account;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Controllers
 {
@@ -56,7 +55,7 @@ namespace TradingCardGame.Controllers
 
             var globalChannelId = this.channelService.GetChannelIdByName("Global Channel");
 
-            await this.channelService.AddUserToChannelAsync(user.Id, globalChannelId, ChannelUserRole.User);
+            await this.channelService.AddUserToChannelAsync(user.Id, globalChannelId);
             await this.signInManager.SignInAsync(user, true);
 
             return Redirect("/Channel/Index");

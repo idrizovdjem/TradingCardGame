@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
+
 using TradingCardGame.Models.Posts;
 
-namespace TradingCardGame.Services
+namespace TradingCardGame.Services.Contracts
 {
     public interface IPostService
     {

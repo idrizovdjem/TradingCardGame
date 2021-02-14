@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TradingCardGame.Data;
 using TradingCardGame.Data.Enums;
 using TradingCardGame.Models.Card;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Services
 {

@@ -1,14 +1,17 @@
 ﻿using System.Linq;
-using TradingCardGame.Data;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+
+using Microsoft.EntityFrameworkCore;
+
+using TradingCardGame.Data;
 using TradingCardGame.Data.Enums;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Models.Enums;
-using Microsoft.EntityFrameworkCore;
 using TradingCardGame.Models.Browse;
 using TradingCardGame.Models.Channel;
 using TradingCardGame.Models.Account;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Services
 {
@@ -23,9 +26,18 @@ namespace TradingCardGame.Services
             this.postService = postService;
         }
 
-        public async Task AddUserToChannelAsync(string userId, string channelId, ChannelUserRole role)
+        public async Task AddUserToChannelAsync(string userId, string channelId)
         {
-            if(!this.context.Channels.Any(x => x.Id == channelId))
+            var channel = this.context.Channels
+                .FirstOrDefault(x => x.Id == channelId && x.IsDeleted == false);
+
+            if(channel == null)
+            {
+                return;
+            }
+
+            if(this.context.UserChannels
+                .Any(x => x.ChannelId == channelId && x.UserId == userId))
             {
                 return;
             }
@@ -34,8 +46,16 @@ namespace TradingCardGame.Services
             {
                 UserId = userId,
                 ChannelId = channelId,
-                Role = role
             };
+
+            if(this.IsUserOwner(channel.Name, userId))
+            {
+                userChannel.Role = ChannelUserRole.Administrator;
+            }
+            else
+            {
+                userChannel.Role = ChannelUserRole.User;
+            }
 
             await this.context.UserChannels.AddAsync(userChannel);
             await this.context.SaveChangesAsync();

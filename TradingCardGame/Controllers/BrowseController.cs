@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
-using TradingCardGame.Services;
 using TradingCardGame.Data.Models;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Controllers
 {
@@ -31,7 +31,7 @@ namespace TradingCardGame.Controllers
         public async Task<IActionResult> JoinChannel(string channelId)
         {
             var userId = this.userManager.GetUserAsync(User).GetAwaiter().GetResult().Id;
-            await this.channelService.AddUserToChannelAsync(userId, channelId, Data.Enums.ChannelUserRole.User);
+            await this.channelService.AddUserToChannelAsync(userId, channelId);
             return Redirect("Index");
         }
 

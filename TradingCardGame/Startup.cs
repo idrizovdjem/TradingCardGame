@@ -12,6 +12,7 @@ using TradingCardGame.Data;
 using TradingCardGame.Services;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Data.Seeders;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame
 {

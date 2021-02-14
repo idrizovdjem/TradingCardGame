@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+
 using TradingCardGame.Data;
 using TradingCardGame.Models.Channel;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Services
 {

@@ -1,6 +1,6 @@
 ﻿using TradingCardGame.Models.Channel;
 
-namespace TradingCardGame.Services
+namespace TradingCardGame.Services.Contracts
 {
     public interface IUserService
     {

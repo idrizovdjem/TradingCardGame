@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using TradingCardGame.Services;
 using System.Collections.Generic;
-using TradingCardGame.Data.Models;
+
 using Microsoft.Extensions.DependencyInjection;
+
+using TradingCardGame.Data.Models;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Data.Seeders
 {

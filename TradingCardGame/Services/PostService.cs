@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
-using TradingCardGame.Data;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+
+using Microsoft.EntityFrameworkCore;
+
+using TradingCardGame.Data;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Models.Posts;
-using Microsoft.EntityFrameworkCore;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Services
 {

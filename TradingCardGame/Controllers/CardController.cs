@@ -3,8 +3,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 
-using TradingCardGame.Services;
 using TradingCardGame.Data.Models;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Controllers
 {

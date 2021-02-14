@@ -1,18 +1,19 @@
 ﻿using System.Threading.Tasks;
-using TradingCardGame.Data.Enums;
 using System.Collections.Generic;
+
+using TradingCardGame.Data.Enums;
 using TradingCardGame.Data.Models;
-using TradingCardGame.Models.Channel;
 using TradingCardGame.Models.Browse;
 using TradingCardGame.Models.Account;
+using TradingCardGame.Models.Channel;
 
-namespace TradingCardGame.Services
+namespace TradingCardGame.Services.Contracts
 {
     public interface IChannelService
     {
         Task CreateAsync(Channel input);
 
-        Task AddUserToChannelAsync(string userId, string channelId, ChannelUserRole role);
+        Task AddUserToChannelAsync(string userId, string channelId);
 
         string GetChannelIdByName(string channelName);
 

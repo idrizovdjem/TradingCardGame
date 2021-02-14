@@ -9,6 +9,7 @@ allChannels.map(channel => {
         channel.children[0].textContent = `> ${channel.children[0].textContent}`;
         let { name, posts } = await getChannelContent();
         renderChannelContent(name, posts);
+        sessionStorage.setItem('selectedChannel', name);
     });
 });
 
@@ -50,7 +51,12 @@ function renderChannelContent(name, posts) {
     const leaveElement = document.createElement('a');
     leaveElement.classList.add('channel-nav-item');
     leaveElement.textContent = 'Leave';
-    leaveElement.setAttribute('href', '/Manage/Leave?channelName=' + name);
+    leaveElement.addEventListener('click', () => {
+        const confirmationResult = confirm("Are you sure you want to leave the channel ?");
+        if (confirmationResult) {
+            window.location.href = '/Manage/Leave?channelName=' + name;
+        }
+    });
 
     const channelNavElement = document.getElementById('channelNav');
     channelNavElement.innerHTML = '';
@@ -246,5 +252,18 @@ function likePost(post, scoreElement, likeElement) {
 
 window.onload = function () {
     const userChannels = document.querySelector('div.user-channels');
-    userChannels.children[0].click();
+    const selectedChannel = sessionStorage.getItem('selectedChannel');
+    let index = -1;
+    for (let i = 0; i < userChannels.children.length; i++) {
+        if (userChannels.children[i].children[0].textContent === selectedChannel) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index === -1) {
+        index = 0;
+    }
+
+    userChannels.children[index].click();
 }

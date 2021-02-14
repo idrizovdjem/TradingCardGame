@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
-using TradingCardGame.Services;
-using TradingCardGame.Data.Enums;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Models.Channel;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Controllers
 {
@@ -15,15 +14,13 @@ namespace TradingCardGame.Controllers
     [AutoValidateAntiforgeryToken]
     public class ChannelController : Controller
     {
-        private readonly IUserService userService;
         private readonly IChannelService channelService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public ChannelController(IUserService userService, IChannelService channelService, UserManager<ApplicationUser> userManager)
+        public ChannelController(IChannelService channelService, UserManager<ApplicationUser> userManager)
         {
             this.channelService = channelService;
             this.userManager = userManager;
-            this.userService = userService;
         }
 
         public async Task<IActionResult> Index()
@@ -76,7 +73,7 @@ namespace TradingCardGame.Controllers
             };
 
             await this.channelService.CreateAsync(channel);
-            await this.channelService.AddUserToChannelAsync(user.Id, channel.Id, ChannelUserRole.Administrator);
+            await this.channelService.AddUserToChannelAsync(user.Id, channel.Id);
 
             return RedirectToAction("Index");
         }

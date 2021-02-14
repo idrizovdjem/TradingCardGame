@@ -3,7 +3,7 @@
 using TradingCardGame.Data.Enums;
 using TradingCardGame.Models.Card;
 
-namespace TradingCardGame.Services
+namespace TradingCardGame.Services.Contracts
 {
     public interface ICardService
     {

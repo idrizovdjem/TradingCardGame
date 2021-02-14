@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
-using TradingCardGame.Services;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Models.Posts;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Controllers
 {
