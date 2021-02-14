@@ -12,10 +12,13 @@
     <div class="channels-sidebar">
         <h3 class="channels-text">Channels</h3>
         <div class="user-channels">
-            
-            <div class="channel-create-button">
-                <a class="btn btn-primary w-100 @createButtonStyle" asp-controller="Channel" asp-action="CreateChannel">Create Channel</a>
-            </div>
+
+            @if (!Model.IsChannelCreated)
+            {
+                <div class="channel-create-button">
+                    <a class="btn btn-primary w-100 @createButtonStyle" asp-controller="Channel" asp-action="CreateChannel">Create Channel</a>
+                </div>
+            }
 
             @foreach (var channel in Model.Channels)
             {

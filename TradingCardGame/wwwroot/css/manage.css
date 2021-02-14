@@ -34,14 +34,14 @@
 
 .manage-nav-item {
     float: left;
-    width: 50%;
+    width: 100%;
     font-size: 30px;
 }
 
-    .manage-nav-item:hover {
-        background-color: lightgray;
-        cursor: pointer;
-    }
+.manage-nav-item:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
 
 .change-container {
     width: 50%;
@@ -87,4 +87,8 @@
     color: red;
     cursor: pointer;
     user-select: none;
+}
+
+.no-users {
+    font-size: 30px;
 }

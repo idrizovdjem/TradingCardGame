@@ -3,6 +3,17 @@
     const dataContainer = document.querySelector('div.data-container');
     dataContainer.innerHTML = '';
 
+    if (users.length === 0) {
+        const noUsersElement = document.createElement('p');
+        noUsersElement.textContent = 'No users in this channel';
+        noUsersElement.classList.add('no-users');
+        dataContainer.appendChild(noUsersElement);
+        dataContainer.style.textAlign = 'center';
+        return;
+    } else {
+        dataContainer.style.textAlign = 'left';
+    }
+
     for (const user of users) {
         const userEmailElement = document.createElement('span');
         userEmailElement.classList.add('user-email');
