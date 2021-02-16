@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using TradingCardGame.Data.Enums;
 using TradingCardGame.Models.Card;
@@ -10,5 +11,7 @@ namespace TradingCardGame.Services.Contracts
         ChannelCardsViewModel GetChannelCards(string channelName, string userId);
 
         IEnumerable<CardViewModel> GetCards(string channelId, CardStatus status);
+
+        Task CreateAsync(CreateCardInputModel input, string userId);
     }
 }

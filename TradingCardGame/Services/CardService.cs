@@ -5,6 +5,8 @@ using TradingCardGame.Data;
 using TradingCardGame.Data.Enums;
 using TradingCardGame.Models.Card;
 using TradingCardGame.Services.Contracts;
+using System.Threading.Tasks;
+using TradingCardGame.Data.Models;
 
 namespace TradingCardGame.Services
 {
@@ -15,6 +17,49 @@ namespace TradingCardGame.Services
         public CardService(ApplicationDbContext context)
         {
             this.context = context;
+        }
+
+        public async Task CreateAsync(CreateCardInputModel input, string userId)
+        {
+            var channel = this.context.Channels
+                .FirstOrDefault(x => x.Name == input.ChannelName);
+
+            if(channel == null)
+            {
+                return;
+            }
+
+            var userChannel = this.context.UserChannels
+                .FirstOrDefault(x => x.ChannelId == channel.Id && x.UserId == userId);
+
+            if(userChannel == null)
+            {
+                return;
+            }
+
+            var card = new Card()
+            {
+                Name = input.Name,
+                Type = input.Type,
+                Image = input.Image,
+                Description = input.Description,
+                ChannelId = channel.Id,
+                Attack = input.Attack,
+                Defense = input.Defense,
+                CreatorId = userId,
+            };
+
+            if(userChannel.Role == ChannelUserRole.User)
+            {
+                card.Status = CardStatus.ForReview;
+            }
+            else
+            {
+                card.Status = CardStatus.Approved;
+            }
+
+            await this.context.Cards.AddAsync(card);
+            await this.context.SaveChangesAsync();
         }
 
         public IEnumerable<CardViewModel> GetCards(string channelId, CardStatus status)

@@ -1,0 +1,61 @@
+﻿.form-container {
+    width: 60%;
+    float: left;
+}
+
+.form-container form {
+    width: 70%;
+    margin: auto;
+}
+
+.card-preview-container {
+    width: 40%;
+    float: left;
+    height: 100vh;
+}
+
+.card-preview {
+    width: 60%;
+    height: 80%;
+    margin: 7% auto;
+    background-color: #b57e3b;
+}
+
+.card-name {
+    font-size: 2vw;
+    padding-left: 10%;
+    height: 5%;
+    width: 100%;
+}
+
+.card-image {
+    margin: 2.5% auto;
+    width: 80%;
+    height: 55%;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.card-description {
+    width: 80%;
+    margin: auto;
+    height: 30%;
+    background-color: lightgray;
+    overflow-y: auto;
+    padding: 5px 10px;
+}
+
+.card-description span {
+    width: 100%;
+}
+
+.card-stats {
+    width: 80%;
+    margin: auto;
+    height: 10%;
+    font-size: 1.7vw;
+    text-align: center;
+}
