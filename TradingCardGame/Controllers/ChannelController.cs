@@ -77,5 +77,12 @@ namespace TradingCardGame.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> GetUserRole(string channelName)
+        {
+            var user = await this.userManager.GetUserAsync(User);
+            var userRole = this.channelService.GetUserRole(channelName, user.Id);
+            return Json(userRole);
+        }
     }
 }

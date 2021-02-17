@@ -1,0 +1,17 @@
+﻿.buttons-container {
+    width: 100%;
+}
+
+.buttons-container a {
+    text-align: center;
+    width: 50%;
+    font-size: 2.5vw;
+    float: left;
+    color: black;
+    text-decoration: none;
+}
+
+.buttons-container a:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}

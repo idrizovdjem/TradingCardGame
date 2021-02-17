@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Review";
+}
+
+@model TradingCardGame.Models.Card.CardViewModel
+
+<link rel="stylesheet" href="~/css/createCard.css" />
+<link rel="stylesheet" href="~/css/review.css" />
+
+<div>
+    <div class="form-container">
+        <div class="col-10 offset-1 mt-3">
+            <div class="form-group">
+                <input asp-for="Name" placeholder="Card name" class="form-control" value="@Model.Name" disabled />
+            </div>
+            <div class="form-group">
+                <input asp-for="Image" placeholder="Card image" class="form-control" value="@Model.Image" disabled />
+            </div>
+            <div class="form-group">
+                <select asp-for="Type" class="custom-select" id="typeSelect" disabled>
+                    <option value="Trap">Trap</option>
+                    <option value="Spell">Spell</option>
+                    <option value="Dragon">Dragon</option>
+                    <option value="Fire">Fire</option>
+                    <option value="Water">Water</option>
+                    <option value="Earth">Earth</option>
+                    <option value="Air">Air</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea asp-for="Description" placeholder="Card description" class="form-control" rows="5" value="@Model.Description" disabled></textarea>
+            </div>
+            <div class="form-group">
+                <input asp-for="Attack" placeholder="Card attack" class="form-control" value="@Model.Attack" disabled />
+            </div>
+            <div class="form-group">
+                <input asp-for="Defense" placeholder="Card defense" class="form-control" value="@Model.Defense" disabled />
+            </div>
+            <div class="buttons-container">
+                <a asp-controller="Card" asp-action="SendReview" asp-route-cardId="@Model.Id" asp-route-decision="dismiss">Dismiss</a>
+                <a asp-controller="Card" asp-action="SendReview" asp-route-cardId="@Model.Id" asp-route-decision="approve">Approve</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-preview-container">
+        <div class="card-preview">
+            <div class="card-name">
+                <span id="cardName">@Model.Name</span>
+            </div>
+            <div class="card-image">
+                <img src="@Model.Image" id="cardImage" />
+            </div>
+            <div class="card-description">
+                <p id="cardDescription">[@Model.Type]<br />@Model.Description</p>
+            </div>
+            <div class="card-stats" id="cardStats">
+                ATT: @Model.Attack | DEF: @Model.Defense
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/review.js"></script>
+} 

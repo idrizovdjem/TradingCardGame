@@ -17,5 +17,9 @@ namespace TradingCardGame.Services.Contracts
         Task UpdateAsync(EditCardInputModel input);
 
         EditCardInputModel GetCardForEdit(string cardId);
+
+        CardViewModel GetCardForReview(string cardId);
+
+        Task ReviewCard(string cardId, CardStatus status);
     }
 }

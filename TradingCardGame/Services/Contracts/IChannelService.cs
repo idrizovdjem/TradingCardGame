@@ -19,6 +19,8 @@ namespace TradingCardGame.Services.Contracts
 
         string GetChannelName(string userId);
 
+        string GetUserRole(string channelName, string userId);
+
         List<string> GetUserChannels(string userId);
 
         ChannelViewModel GetChannelContent(string channelName, string userId);

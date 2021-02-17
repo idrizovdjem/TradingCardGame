@@ -1,7 +1,7 @@
 ﻿const cards = Array.from(document.querySelectorAll('div.small-card'));
 const cardPreview = document.querySelector('div.card-preview');
 cards.map(card => {
-    card.addEventListener('mouseover', (event) => {
+    card.addEventListener('click', (event) => {
         const cardImage = card.children[0].src;
         const cardName = event.currentTarget.children[1].value;
         const cardDescription = event.currentTarget.children[2].value;
@@ -17,3 +17,40 @@ cards.map(card => {
         document.getElementById('editCard').href = '/Card/Edit?cardId=' + cardId;
     });
 });
+
+window.onload = async function () {
+    const channelName = sessionStorage.getItem('selectedChannel');
+    const userRole = await fetch('/Channel/GetUserRole?channelName=' + channelName)
+        .then(response => response.json())
+        .then(data => data);
+
+    if (userRole === 'Administrator' || userRole === 'Moderator') {
+        renderCardsForReview(channelName);
+    }
+}
+
+async function renderCardsForReview(channelName) {
+    const cards = await getCardsForReview(channelName);
+    const reviewSection = document.getElementById('reviewSection');
+    for (const card of cards) {
+
+        const imgElement = document.createElement('img');
+        imgElement.src = card.image;
+
+        const cardContainer = document.createElement('div');
+        cardContainer.classList.add('small-card');
+        cardContainer.appendChild(imgElement);
+
+        cardContainer.addEventListener('click', () => {
+            window.location.href = '/Card/Review?cardId=' + card.id;
+        });
+
+        reviewSection.appendChild(cardContainer);
+    }
+}
+
+async function getCardsForReview(channelName) {
+    return await fetch(`/Card/GetCardsWithStatus?channelName=${channelName}&status=ForReview`)
+        .then(response => response.json())
+        .then(data => data);
+}

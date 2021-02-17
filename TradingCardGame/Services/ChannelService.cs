@@ -326,6 +326,15 @@ namespace TradingCardGame.Services
                 .FirstOrDefault();
         }
 
+        public string GetUserRole(string channelName, string userId)
+        {
+            var channelId = this.GetChannelIdByName(channelName);
+            return this.context.UserChannels
+                .Where(x => x.ChannelId == channelId && x.UserId == userId)
+                .Select(x => x.Role.ToString())
+                .FirstOrDefault();
+        }
+
         public async Task AddUserToRoleAsync(string creatorId, string userId, ChannelUserRole role)
         {
             var channelId = this.context.Channels

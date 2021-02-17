@@ -15,7 +15,7 @@
         </div>
         <div class="card-section">
             <h3>Approved Cards:</h3>
-            @foreach(var card in Model.ApprovedCards)
+            @foreach (var card in Model.ApprovedCards)
             {
                 <div class="small-card">
                     <img src="@(card.Image)" />
@@ -28,6 +28,12 @@
                 </div>
             }
         </div>
+        @if (Model.UserRole == "Administrator" || Model.UserRole == "Moderator")
+        {
+            <div class="card-section" id="reviewSection">
+                <h3>Cards For Review:</h3>
+            </div>
+        }
     </div>
     <div class="card-preview-container">
         <div class="card-preview">

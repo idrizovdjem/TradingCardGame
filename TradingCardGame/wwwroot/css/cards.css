@@ -6,7 +6,7 @@
 .cards-container {
     width: 70%;
     float: left;
-    height: 100vh;
+    height: 93vh;
     overflow-y: auto;
     outline: 1px solid black;
 }
@@ -44,8 +44,8 @@
     margin: 10px;
     width: 200px;
     height: 200px;
-    background-color: green;
     float: left;
+    cursor: pointer;
 }
 
 .small-card img {
@@ -55,6 +55,12 @@
 
 .card-section h3 {
     margin: 0 10px;
+}
+
+.card-section {
+    width: 100%;
+    display: block;
+    overflow: auto;
 }
 
 .card-preview {

@@ -83,6 +83,23 @@ namespace TradingCardGame.Services
                 .FirstOrDefault();
         }
 
+        public CardViewModel GetCardForReview(string cardId)
+        {
+            return this.context.Cards
+                .Where(x => x.Id == cardId && x.Status == CardStatus.ForReview)
+                .Select(x => new CardViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Image = x.Image,
+                    Description = x.Description,
+                    Type = x.Type.ToString(),
+                    Attack = x.Attack,
+                    Defense = x.Defense
+                })
+                .FirstOrDefault();
+        }
+
         public IEnumerable<CardViewModel> GetCardsWithStatus(string channelId, CardStatus status)
         {
             return this.context.Cards
@@ -125,6 +142,21 @@ namespace TradingCardGame.Services
             };
 
             return cardsModel;
+        }
+
+        public async Task ReviewCard(string cardId, CardStatus status)
+        {
+            var card = this.context.Cards
+                .FirstOrDefault(x => x.Id == cardId);
+
+            if(card == null)
+            {
+                return;
+            }
+
+            card.Status = status;
+
+            await this.context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(EditCardInputModel input)
