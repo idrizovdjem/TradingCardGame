@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
 using TradingCardGame.Data.Models;
-using TradingCardGame.Services.Contracts;
 using TradingCardGame.Models.Card;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Controllers
 {
