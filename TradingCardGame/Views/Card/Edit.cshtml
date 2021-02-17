@@ -1,22 +1,23 @@
-﻿@{ 
+﻿@{
     Layout = "_Layout";
-    ViewData["Title"] = "Create Card";
+    ViewData["Title"] = "Edit Card";
 }
 
-@model TradingCardGame.Models.Card.CreateCardInputModel
+@model TradingCardGame.Models.Card.EditCardInputModel
 
 <link rel="stylesheet" href="~/css/createCard.css" />
 
-<div >
+<div>
     <div class="form-container">
-        <form asp-controller="Card" asp-action="Create" method="post">
+        <form asp-controller="Card" asp-action="Edit" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <input type="hidden" id="channel" asp-for="ChannelName"/>
+            <input type="hidden" id="channel" name="ChannelName" asp-for="ChannelName"/>
+            <input type="hidden" asp-for="@Model.Id" name="id" value="@Model.Id"/>
             <div class="form-group">
-                <input asp-for="Name" placeholder="Card name" class="form-control"/>
+                <input asp-for="Name" placeholder="Card name" class="form-control" value="@Model.Name"/>
             </div>
             <div class="form-group">
-                <input asp-for="Image" placeholder="Card image" class="form-control" />
+                <input asp-for="Image" placeholder="Card image" class="form-control" value="@Model.Image"/>
             </div>
             <div class="form-group">
                 <select asp-for="Type" class="custom-select" id="typeSelect">
@@ -30,30 +31,30 @@
                 </select>
             </div>
             <div class="form-group">
-                <textarea asp-for="Description" placeholder="Card description" class="form-control" rows="5"></textarea>
+                <textarea asp-for="Description" placeholder="Card description" class="form-control" rows="5" value="@Model.Description"></textarea>
             </div>
             <div class="form-group">
-                <input asp-for="Attack" placeholder="Card attack" class="form-control" />
+                <input asp-for="Attack" placeholder="Card attack" class="form-control" value="@Model.Attack"/>
             </div>
             <div class="form-group">
-                <input asp-for="Defense" placeholder="Card defense" class="form-control" />
+                <input asp-for="Defense" placeholder="Card defense" class="form-control" value="@Model.Defense"/>
             </div>
-            <button class="btn btn-primary w-100">Create Card</button>
+            <button class="btn btn-primary w-100">Edit Card</button>
         </form>
     </div>
     <div class="card-preview-container">
         <div class="card-preview">
             <div class="card-name">
-                <span id="cardName">Card Name</span>
+                <span id="cardName">@Model.Name</span>
             </div>
             <div class="card-image">
-                <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.clker.com%2Fcliparts%2F1%2Fo%2FF%2Fg%2F6%2FN%2Ffull-black-square-hi.png&f=1&nofb=1" id="cardImage"/>
+                <img src="@Model.Image" id="cardImage" />
             </div>
             <div class="card-description">
-                <span id="cardDescription"></span>
+                <p id="cardDescription">[@Model.Type]<br />@Model.Description</p>
             </div>
             <div class="card-stats" id="cardStats">
-                ATT: 0 | DEF: 0
+                ATT: @Model.Attack | DEF: @Model.Defense
             </div>
         </div>
     </div>

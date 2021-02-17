@@ -10,8 +10,12 @@ namespace TradingCardGame.Services.Contracts
     {
         ChannelCardsViewModel GetChannelCards(string channelName, string userId);
 
-        IEnumerable<CardViewModel> GetCards(string channelId, CardStatus status);
+        IEnumerable<CardViewModel> GetCardsWithStatus(string channelId, CardStatus status);
 
         Task CreateAsync(CreateCardInputModel input, string userId);
+
+        Task UpdateAsync(EditCardInputModel input);
+
+        EditCardInputModel GetCardForEdit(string cardId);
     }
 }

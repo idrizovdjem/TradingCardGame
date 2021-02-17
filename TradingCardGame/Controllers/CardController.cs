@@ -54,5 +54,30 @@ namespace TradingCardGame.Controllers
 
             return RedirectToAction("Index", new { channelName = input.ChannelName } );
         }
+
+        public IActionResult Edit(string cardId)
+        {
+            var card = this.cardService.GetCardForEdit(cardId);
+            return View(card);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditCardInputModel input)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            if (input.ChannelName == string.Empty)
+            {
+                ModelState.AddModelError("ChannelName", "Channel is invalid or can't create cards");
+                return View(input);
+            }
+
+            await this.cardService.UpdateAsync(input);
+
+            return RedirectToAction("Index", new { input.ChannelName });
+        }
     }
 }

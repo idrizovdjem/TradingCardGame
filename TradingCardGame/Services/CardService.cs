@@ -1,12 +1,14 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
+
+using Microsoft.EntityFrameworkCore;
 
 using TradingCardGame.Data;
 using TradingCardGame.Data.Enums;
 using TradingCardGame.Models.Card;
-using TradingCardGame.Services.Contracts;
-using System.Threading.Tasks;
 using TradingCardGame.Data.Models;
+using TradingCardGame.Services.Contracts;
 
 namespace TradingCardGame.Services
 {
@@ -62,7 +64,26 @@ namespace TradingCardGame.Services
             await this.context.SaveChangesAsync();
         }
 
-        public IEnumerable<CardViewModel> GetCards(string channelId, CardStatus status)
+        public EditCardInputModel GetCardForEdit(string cardId)
+        {
+            return this.context.Cards
+                .Where(x => x.Id == cardId)
+                .Include(x => x.Channel)
+                .Select(x => new EditCardInputModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Type = x.Type,
+                    Image = x.Image,
+                    Description = x.Description,
+                    Attack = x.Attack,
+                    Defense = x.Defense,
+                    ChannelName = x.Channel.Name
+                })
+                .FirstOrDefault();
+        }
+
+        public IEnumerable<CardViewModel> GetCardsWithStatus(string channelId, CardStatus status)
         {
             return this.context.Cards
                 .Where(x => x.ChannelId == channelId && x.Status == status)
@@ -100,10 +121,30 @@ namespace TradingCardGame.Services
             var cardsModel = new ChannelCardsViewModel()
             {
                 UserRole = userChannel.Role.ToString(),
-                ApprovedCards = this.GetCards(channel.Id, CardStatus.Approved)
+                ApprovedCards = this.GetCardsWithStatus(channel.Id, CardStatus.Approved)
             };
 
             return cardsModel;
+        }
+
+        public async Task UpdateAsync(EditCardInputModel input)
+        {
+            var card = this.context.Cards
+                .FirstOrDefault(x => x.Id == input.Id);
+            
+            if(card == null)
+            {
+                return;
+            }
+
+            card.Name = input.Name;
+            card.Image = input.Image;
+            card.Description = input.Description;
+            card.Type = input.Type;
+            card.Attack = input.Attack;
+            card.Defense = input.Defense;
+
+            await this.context.SaveChangesAsync();
         }
     }
 }

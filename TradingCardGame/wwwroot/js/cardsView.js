@@ -8,10 +8,12 @@ cards.map(card => {
         const attack = event.currentTarget.children[3].value;
         const defense = event.currentTarget.children[4].value;
         const cardType = event.currentTarget.children[5].value;
+        const cardId = event.currentTarget.children[6].value;
 
         cardPreview.children[1].children[0].src = cardImage;
         cardPreview.children[0].children[0].textContent = cardName;
         cardPreview.children[2].children[0].innerHTML = `[${cardType}]<br>${cardDescription}`;
         cardPreview.children[3].textContent = `ATT: ${attack} | DEF: ${defense}`;
+        document.getElementById('editCard').href = '/Card/Edit?cardId=' + cardId;
     });
 });

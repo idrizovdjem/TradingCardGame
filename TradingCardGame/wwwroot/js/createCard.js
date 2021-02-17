@@ -13,9 +13,17 @@ imageInput.addEventListener('change', () => {
     imageElement.src = imageInput.value;
 });
 
+const typeElement = document.getElementById('typeSelect');
+typeElement.addEventListener('change', () => {
+    const type = typeElement.value;
+    const description = descriptionElement.value;
+    descriptionElement.innerHTML = `[${type}]<br>${descriptionTextArea.value}`;
+});
+
 const descriptionElement = document.getElementById('cardDescription');
 descriptionTextArea.addEventListener('input', () => {
-    descriptionElement.textContent = descriptionTextArea.value;
+    const type = typeElement.value;
+    descriptionElement.innerHTML = `[${type}]<br>${descriptionTextArea.value}`;
 });
 
 const statsElement = document.getElementById('cardStats');

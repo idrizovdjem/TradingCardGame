@@ -24,6 +24,7 @@
                     <input type="hidden" value="@(card.Attack)" />
                     <input type="hidden" value="@(card.Defense)" />
                     <input type="hidden" value="@(card.Type)" />
+                    <input type="hidden" value="@(card.Id)" />
                 </div>
             }
         </div>
@@ -43,6 +44,10 @@
                 ATT: 1500 | DEF: 1000
             </div>
         </div>
+        @if(Model.UserRole == "Administrator" || Model.UserRole == "Moderator")
+        {
+            <a class="btn btn-primary text-white" id="editCard">Edit Card</a>
+        }
     </div>
 </div>
 
