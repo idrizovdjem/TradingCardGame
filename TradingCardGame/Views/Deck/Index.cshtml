@@ -3,3 +3,91 @@
     ViewData["Title"] = "Deck Customization";
 }
 
+@model IEnumerable<string>
+
+<div class="main-container">
+    <div class="decks-container">
+        @foreach (var deck in Model)
+        {
+            <div class="deck-element">
+                @deck
+            </div>
+        }
+
+        <button class="btn btn-primary w-100 mt-3" id="showFormButton">Create Deck</button>
+
+        <div class="deck-form" id="deckForm">
+            <form asp-controller="Deck" asp-action="Create" method="post">
+                <input type="hidden" name="channelName" id="channelName" />
+                <div class="form-group">
+                    <input class="form-control" name="name" placeholder="Deck name" />
+                </div>
+                <button class="btn btn-primary w-100">Create Deck</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card-container">
+
+    </div>
+
+    <div class="deck-cards-container">
+
+    </div>
+</div>
+
+<style>
+    .main-container {
+        width: 100%;
+        height: 93vh;
+    }
+
+    .decks-container {
+        width: 25%;
+        float: left;
+        height: 100%;
+    }
+
+    .card-container {
+        width: 50%;
+        float: left;
+        height: 100%;
+    }
+
+    .deck-cards-container {
+        width: 25%;
+        float: left;
+        height: 100%;
+    }
+
+    .deck-element {
+        width: 100%;
+        font-size: 2.3vw;
+        height: 3.5vw;
+        padding-left: 15px;
+    }
+
+    .deck-element:hover {
+        background-color: lightgray;
+        cursor: pointer;
+    }
+
+    .deck-form {
+        width: 80%;
+        margin: 10px auto;
+        display: none;
+    }
+</style>
+
+<script>
+    const showFormButton = document.getElementById('showFormButton');
+    showFormButton.addEventListener('click', () => {
+        showFormButton.style.display = 'none';
+        document.getElementById('deckForm').style.display = 'block';
+    });
+
+    window.onload = function () {
+        const channelName = sessionStorage.getItem('selectedChannel');
+        document.getElementById('channelName').value = channelName;
+    }
+</script>
