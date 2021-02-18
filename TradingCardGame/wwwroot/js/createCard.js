@@ -46,4 +46,5 @@ defenseInput.addEventListener('input', () => {
 window.onload = function () {
     const channel = sessionStorage.getItem('selectedChannel');
     document.getElementById('channel').value = channel;
+    document.getElementById('archiveCard').href += '&channelName=' + channel;
 }

@@ -115,5 +115,11 @@ namespace TradingCardGame.Controllers
             
             return RedirectToAction("Index", new { channelName });
         }
+
+        public async Task<IActionResult> Archive(string cardId, string channelName)
+        {
+            await this.cardService.ReviewCard(cardId, CardStatus.Archived);
+            return RedirectToAction("Index", new { channelName });
+        }
     }
 }

@@ -40,6 +40,7 @@
                 <input asp-for="Defense" placeholder="Card defense" class="form-control" value="@Model.Defense"/>
             </div>
             <button class="btn btn-primary w-100">Edit Card</button>
+            <a class="btn btn-primary w-100 text-white mt-3" asp-controller="Card" asp-action="Archive" asp-route-cardId="@Model.Id" id="archiveCard">Archive Card</a>
         </form>
     </div>
     <div class="card-preview-container">
