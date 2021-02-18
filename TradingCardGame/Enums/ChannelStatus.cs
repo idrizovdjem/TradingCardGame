@@ -1,4 +1,4 @@
-﻿namespace TradingCardGame.Models.Enums
+﻿namespace TradingCardGame.Enums
 {
     public enum ChannelStatus
     {

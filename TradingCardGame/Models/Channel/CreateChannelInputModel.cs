@@ -1,5 +1,6 @@
-﻿using TradingCardGame.Data.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+
+using TradingCardGame.Enums;
 
 namespace TradingCardGame.Models.Channel
 {

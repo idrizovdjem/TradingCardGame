@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using TradingCardGame.Data.Enums;
+
+using TradingCardGame.Enums;
 
 namespace TradingCardGame.Data.Models
 {

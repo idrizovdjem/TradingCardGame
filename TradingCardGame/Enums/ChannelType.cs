@@ -1,4 +1,4 @@
-﻿namespace TradingCardGame.Data.Enums
+﻿namespace TradingCardGame.Enums
 {
     public enum ChannelType
     {

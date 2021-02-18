@@ -38,15 +38,15 @@
                     {
                         <button class="btn btn-danger text-white w-75" disabled>Channel is Full</button>
                     }
-                    else if (channel.Status == TradingCardGame.Models.Enums.ChannelStatus.Available)
+                    else if (channel.Status == TradingCardGame.Enums.ChannelStatus.Available)
                     {
                         <a asp-controller="Browse" asp-action="JoinChannel" asp-route-channelId="@channel.Id" class="btn btn-primary text-white w-75">Join</a>
                     }
-                    else if (channel.Status == TradingCardGame.Models.Enums.ChannelStatus.Joined)
+                    else if (channel.Status == TradingCardGame.Enums.ChannelStatus.Joined)
                     {
                         <button class="btn btn-warning text-white w-75" disabled>Already joined</button>
                     }
-                    else if (channel.Status == TradingCardGame.Models.Enums.ChannelStatus.Private)
+                    else if (channel.Status == TradingCardGame.Enums.ChannelStatus.Private)
                     {
                         <button class="btn btn-danger text-white w-75" disabled>Channel is Private</button>
                     }

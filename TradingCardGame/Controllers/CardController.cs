@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
-using TradingCardGame.Data.Enums;
+using TradingCardGame.Enums;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Models.Card;
 using TradingCardGame.Services.Contracts;

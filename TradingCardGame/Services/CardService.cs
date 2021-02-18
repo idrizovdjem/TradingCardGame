@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 using TradingCardGame.Data;
-using TradingCardGame.Data.Enums;
+using TradingCardGame.Enums;
 using TradingCardGame.Models.Card;
 using TradingCardGame.Data.Models;
 using TradingCardGame.Services.Contracts;

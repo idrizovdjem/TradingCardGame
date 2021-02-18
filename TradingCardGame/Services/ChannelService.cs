@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 using TradingCardGame.Data;
-using TradingCardGame.Data.Enums;
+using TradingCardGame.Enums;
 using TradingCardGame.Data.Models;
-using TradingCardGame.Models.Enums;
 using TradingCardGame.Models.Browse;
 using TradingCardGame.Models.Channel;
 using TradingCardGame.Models.Account;
@@ -240,7 +239,7 @@ namespace TradingCardGame.Services
                     PostsCount = this.context.Posts
                         .Count(p => p.ChannelId == x.Id && p.IsDeleted == false),
                     CardsCount = this.context.Cards
-                        .Count(c => c.ChannelId == x.Id)
+                        .Count(c => c.ChannelId == x.Id && c.Status == CardStatus.Approved)
                 })
                 .FirstOrDefault();
 

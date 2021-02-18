@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using TradingCardGame.Data.Enums;
+using TradingCardGame.Enums;
 
 namespace TradingCardGame.Models.Card
 {

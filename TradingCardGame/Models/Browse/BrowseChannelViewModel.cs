@@ -1,4 +1,4 @@
-﻿using TradingCardGame.Models.Enums;
+﻿using TradingCardGame.Enums;
 
 namespace TradingCardGame.Models.Browse
 {

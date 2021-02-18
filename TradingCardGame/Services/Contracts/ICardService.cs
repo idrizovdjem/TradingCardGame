@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 
-using TradingCardGame.Data.Enums;
+using TradingCardGame.Enums;
 using TradingCardGame.Models.Card;
 
 namespace TradingCardGame.Services.Contracts

@@ -1,5 +1,5 @@
 ﻿using System;
-using TradingCardGame.Data.Enums;
+using TradingCardGame.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace TradingCardGame.Data.Models

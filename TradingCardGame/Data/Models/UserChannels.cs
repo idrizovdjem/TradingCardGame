@@ -1,4 +1,4 @@
-﻿using TradingCardGame.Data.Enums;
+﻿using TradingCardGame.Enums;
 
 namespace TradingCardGame.Data.Models
 {

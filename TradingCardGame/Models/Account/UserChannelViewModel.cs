@@ -1,6 +1,4 @@
-﻿using TradingCardGame.Data.Enums;
-
-namespace TradingCardGame.Models.Account
+﻿namespace TradingCardGame.Models.Account
 {
     public class UserChannelViewModel
     {
