@@ -26,11 +26,12 @@ window.onload = async function () {
 
     if (userRole === 'Administrator' || userRole === 'Moderator') {
         renderCardsForReview(channelName);
+        renderArchivedCards(channelName);
     }
 }
 
 async function renderCardsForReview(channelName) {
-    const cards = await getCardsForReview(channelName);
+    const cards = await getCardsForReview(channelName, 'ForReview');
     const reviewSection = document.getElementById('reviewSection');
     for (const card of cards) {
 
@@ -49,8 +50,28 @@ async function renderCardsForReview(channelName) {
     }
 }
 
-async function getCardsForReview(channelName) {
-    return await fetch(`/Card/GetCardsWithStatus?channelName=${channelName}&status=ForReview`)
+async function renderArchivedCards(channelName) {
+    const cards = await getCardsForReview(channelName, 'Archived');
+    const archivedSection = document.getElementById('archivedSection');
+    for (const card of cards) {
+
+        const imgElement = document.createElement('img');
+        imgElement.src = card.image;
+
+        const cardContainer = document.createElement('div');
+        cardContainer.classList.add('small-card');
+        cardContainer.appendChild(imgElement);
+
+        cardContainer.addEventListener('click', () => {
+            window.location.href = '/Card/Review?cardId=' + card.id;
+        });
+
+        archivedSection.appendChild(cardContainer);
+    }
+}
+
+async function getCardsForReview(channelName, status) {
+    return await fetch(`/Card/GetCardsWithStatus?channelName=${channelName}&status=${status}`)
         .then(response => response.json())
         .then(data => data);
 }

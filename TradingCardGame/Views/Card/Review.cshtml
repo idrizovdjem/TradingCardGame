@@ -38,7 +38,7 @@
                 <input asp-for="Defense" placeholder="Card defense" class="form-control" value="@Model.Defense" disabled />
             </div>
             <div class="buttons-container">
-                <a asp-controller="Card" asp-action="SendReview" asp-route-cardId="@Model.Id" asp-route-decision="dismiss">Dismiss</a>
+                <a asp-controller="Card" asp-action="SendReview" asp-route-cardId="@Model.Id" asp-route-decision="archive">Dismiss</a>
                 <a asp-controller="Card" asp-action="SendReview" asp-route-cardId="@Model.Id" asp-route-decision="approve">Approve</a>
             </div>
         </div>

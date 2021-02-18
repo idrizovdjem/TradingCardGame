@@ -107,7 +107,7 @@ namespace TradingCardGame.Controllers
             CardStatus status = decision switch
             {
                 "approve" => CardStatus.Approved,
-                "dismiss" => CardStatus.Archived,
+                "archive" => CardStatus.Archived,
                 _ => CardStatus.Deleted
             };
 

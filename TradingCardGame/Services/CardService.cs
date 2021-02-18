@@ -86,7 +86,7 @@ namespace TradingCardGame.Services
         public CardViewModel GetCardForReview(string cardId)
         {
             return this.context.Cards
-                .Where(x => x.Id == cardId && x.Status == CardStatus.ForReview)
+                .Where(x => x.Id == cardId && (x.Status == CardStatus.ForReview || x.Status == CardStatus.Archived))
                 .Select(x => new CardViewModel()
                 {
                     Id = x.Id,
@@ -152,6 +152,11 @@ namespace TradingCardGame.Services
             if(card == null)
             {
                 return;
+            }
+
+            if(card.Status == CardStatus.Archived && status == CardStatus.Archived)
+            {
+                status = CardStatus.Deleted;
             }
 
             card.Status = status;
