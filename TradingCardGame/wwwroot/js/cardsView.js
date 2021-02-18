@@ -20,6 +20,8 @@ cards.map(card => {
 
 window.onload = async function () {
     const channelName = sessionStorage.getItem('selectedChannel');
+    document.getElementById('deckLink').href += '?channelName=' + channelName;
+
     const userRole = await fetch('/Channel/GetUserRole?channelName=' + channelName)
         .then(response => response.json())
         .then(data => data);

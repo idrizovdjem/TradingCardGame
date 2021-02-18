@@ -327,6 +327,57 @@ namespace TradingCardGame.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("TradingCardGame.Data.Models.Deck", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ChannelId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChannelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Decks");
+                });
+
+            modelBuilder.Entity("TradingCardGame.Data.Models.DeckCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("CardId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeckId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.HasIndex("DeckId");
+
+                    b.ToTable("DeckCards");
+                });
+
             modelBuilder.Entity("TradingCardGame.Data.Models.Post", b =>
                 {
                     b.Property<string>("Id")
@@ -531,6 +582,44 @@ namespace TradingCardGame.Migrations
                     b.Navigation("Post");
                 });
 
+            modelBuilder.Entity("TradingCardGame.Data.Models.Deck", b =>
+                {
+                    b.HasOne("TradingCardGame.Data.Models.Channel", "Channel")
+                        .WithMany()
+                        .HasForeignKey("ChannelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TradingCardGame.Data.Models.ApplicationUser", "User")
+                        .WithMany("Decks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Channel");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TradingCardGame.Data.Models.DeckCard", b =>
+                {
+                    b.HasOne("TradingCardGame.Data.Models.Card", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TradingCardGame.Data.Models.Deck", "Deck")
+                        .WithMany("Cards")
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+
+                    b.Navigation("Deck");
+                });
+
             modelBuilder.Entity("TradingCardGame.Data.Models.Post", b =>
                 {
                     b.HasOne("TradingCardGame.Data.Models.Channel", "Channel")
@@ -607,6 +696,8 @@ namespace TradingCardGame.Migrations
 
                     b.Navigation("DeckCards");
 
+                    b.Navigation("Decks");
+
                     b.Navigation("PostVotes");
                 });
 
@@ -617,6 +708,11 @@ namespace TradingCardGame.Migrations
                     b.Navigation("Posts");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("TradingCardGame.Data.Models.Deck", b =>
+                {
+                    b.Navigation("Cards");
                 });
 
             modelBuilder.Entity("TradingCardGame.Data.Models.Post", b =>
