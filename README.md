@@ -1,3 +1,3 @@
 # TradingCardGame
 
-Project, aiming to give the Card game fans to create their own card universe.
+### The aim of the project is to give the chance to card game lovers, to create their own card univers
