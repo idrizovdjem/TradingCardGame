@@ -30,6 +30,9 @@ namespace TradingCardGame.Data.Models
         public int Defense { get; set; }
 
         [Required]
+        public string Effect { get; set; }
+
+        [Required]
         public string ChannelId { get; set; }
 
         public Channel Channel { get; set; }
